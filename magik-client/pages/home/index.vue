@@ -6,20 +6,35 @@
       </div>
       <div class="content">
         <div class="header">
-          <div class="left-header"></div>
+          <div class="left-header">
+            <component :is="currentRoute.nav.header"/>
+          </div>
           <div class="right-header"></div>
         </div>
         <el-scrollbar>
           <div class="body">
-            <div class="left-body">1</div>
-             <div class="right-body">2</div>
-        </div>
+            <div class="left-body">
+              <template v-if="route.fullPath!=='/home'">
+                <NuxtPage/>
+              </template>
+              <template v-else>
+                 <Recommend/> 
+              </template>
+            </div>
+             <div class="right-body">
+             </div>
+          </div>
         </el-scrollbar>
         
       </div>
     </div>
   </div>
 </template>
+<script setup>
+const route = useRoute();
+const currentRoute = useCurrentRoute();
+console.log(route)
+</script>
 <style scoped lang="less">
 .home-container{
   width: 100%;
@@ -56,6 +71,7 @@
         width: 598px;
         height: 100%;
         border-right: 1px solid #f0f3f4;
+        border-bottom: 1px solid #f0f3f4;
       }
       .right-header{
         flex: 1;
@@ -63,7 +79,6 @@
       }
     }
     .body{
-      background-color: skyblue;
       flex: 1;
       display: flex;
       align-items: flex-start;

@@ -6,10 +6,14 @@
       </div>
     </div>
     <ul class="list">
-      <li v-for="item in menu" :key="item.label" class="item">
+      <li v-for="(item,index) in menu" 
+        :key="item.label" 
+        class="item" 
+        :class="{active:index===currentIndex}"
+        @click="navClick(item,index)">
         <div class="shadow">
           <component :is="item.icon"/>
-        <div class="title">{{ item.title }}</div>
+          <div class="title">{{ item.title }}</div>
         </div>
       </li>
     </ul>
@@ -20,6 +24,19 @@
 <script setup>
 import { menu } from "~/constant/menu"
 import Logo from "~/assets/svg/logo.vue"
+const currentIndex = ref(0);
+const router = useRouter();
+const currentRoute = useCurrentRoute();
+onMounted(() => {
+  currentRoute.changeCurrentRoute(menu[0]);
+})
+const navClick = (item, index) => {
+  currentIndex.value = index;
+  router.push({
+    path: item.path,
+  })
+  currentRoute.changeCurrentRoute(item);
+}
 </script>
 <style lang="less">
   .nav-bar{
@@ -33,6 +50,7 @@ import Logo from "~/assets/svg/logo.vue"
         padding:0;
         cursor: pointer;
         width: auto ;
+        
         .shadow{
           width: auto;
           display: flex;
@@ -43,6 +61,10 @@ import Logo from "~/assets/svg/logo.vue"
         }
         .title{
           margin: 0 0 0 20px;
+          font-size: 20px
+        }
+        &.active{
+         font-weight: bold; 
         }
         &:hover{
           .shadow{
