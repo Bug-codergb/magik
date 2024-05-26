@@ -18,15 +18,15 @@ public class Upload {
     boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(fileType).build());
     if(!isExist){
       minioClient.makeBucket(MakeBucketArgs.builder().bucket(fileType).build());
-     // String p = "{\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::video\"},{\"Action\":\"s3:GetObject\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::video/*\"}],\"Version\":\"2012-10-17\"}";
-//      minioClient.setBucketPolicy(SetBucketPolicyArgs.builder()
-//              .bucket(fileType)
-//              .config(p).build());
+      String p = "{\"Statement\":[{\"Sid\":\"PublicRead\",\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::"+fileType+"/*\"]}],\"Version\":\"2012-10-17\"}";
+      minioClient.setBucketPolicy(SetBucketPolicyArgs.builder()
+              .bucket(fileType)
+              .config(p).build());
     }
       ObjectWriteResponse objectWriteResponse = minioClient.putObject(PutObjectArgs.builder()
               .bucket(fileType)
               .object(filename)
-              .contentType(fileType)
+              .contentType(file.getContentType())
               .stream(file.getInputStream(),file.getSize(),-1).build());
     return "success";
   }
