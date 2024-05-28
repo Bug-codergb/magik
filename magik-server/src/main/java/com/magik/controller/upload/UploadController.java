@@ -2,6 +2,7 @@ package com.magik.controller.upload;
 
 import com.magik.bean.Upload;
 import com.magik.constant.Host;
+import com.magik.result.R;
 import com.magik.service.upload.UploadService;
 import com.magik.utils.FileUniqueName;
 import io.minio.*;
@@ -23,7 +24,7 @@ public class UploadController {
   @Resource
   private MinioClient minioClient;
   @PostMapping("/upload")
-  public String uploadFile(@RequestBody MultipartFile file) throws Exception{
+  public R<String> uploadFile(@RequestBody MultipartFile file) throws Exception{
     String fileType = file.getContentType().substring(0,file.getContentType().indexOf("/"));
     String filename = new FileUniqueName().getFileUniqueName(file.getOriginalFilename());
 
@@ -65,6 +66,6 @@ public class UploadController {
     uploadFile.setFilename(filename);
     uploadFile.setUrl(Host.MINIO_HOST.getHOST()+"/"+fileType+"/"+filename);
     uploadService.uploadFile(uploadFile);
-    return "success";
+    return new R<String>(200,"success",uploadFile.getUrl());
   }
 }
