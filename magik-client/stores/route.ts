@@ -1,15 +1,15 @@
 import type { INav } from "~/interface/nav";
-import { defineStore } from 'pinia'
-interface ICurrentRoute{
-  nav:INav
+import { defineStore } from "pinia";
+interface ICurrentRoute {
+  nav: INav;
 }
 export const useCurrentRoute = defineStore("currentRoute", {
-  state: ():ICurrentRoute => ({
-    nav:{}
+  state: (): ICurrentRoute => ({
+    nav: {}
   }),
   actions: {
-    changeCurrentRoute(arg:INav) {
+    changeCurrentRoute(arg: INav) {
       this.nav = arg;
     }
   }
-})
+});

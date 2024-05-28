@@ -15,61 +15,61 @@ export const menu = [
     icon: home,
     isRoute: true,
     path: "/home",
-    header: RecommendHeader,
+    header: RecommendHeader
   },
   {
     title: "探索",
     icon: explore,
     isRoute: true,
     path: "/home/explore",
-    header: <div>118</div>,
+    header: <div>118</div>
   },
   {
     title: "通知",
     icon: notify,
     isRoute: true,
     path: "/home/notify",
-    header: <div>117</div>,
+    header: <div>117</div>
   },
   {
     title: "私信",
     icon: message,
     isRoute: true,
     path: "/home/message",
-    header: <div>116</div>,
+    header: <div>116</div>
   },
   {
     title: "列表",
     icon: list,
     isRoute: true,
     path: "/home/list",
-    header: <div>115</div>,
+    header: <div>115</div>
   },
   {
     title: "书签",
     icon: tag,
     isRoute: true,
     path: "/home/tag",
-    header: <div>114</div>,
+    header: <div>114</div>
   },
   {
     title: "社区",
     icon: community,
     isRoute: true,
     path: "/home/community",
-    header: <div>113</div>,
+    header: <div>113</div>
   },
   {
     title: "个人资料",
     icon: profile,
     isRoute: true,
     path: "/home/profile",
-    header: <div>112</div>,
+    header: <div>112</div>
   },
   {
     title: "更多",
     icon: more,
     isRoute: false,
-    header: <div>111</div>,
-  },
+    header: <div>111</div>
+  }
 ];

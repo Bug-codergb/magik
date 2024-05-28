@@ -1,12 +1,6 @@
 <template>
   <div class="media-crop-container">
-    <el-dialog
-      v-model="isShow"
-      title="裁剪媒体"
-      width="600px"
-      :close-on-click-modal="false"
-      :show-close="false"
-    >
+    <el-dialog v-model="isShow" title="裁剪媒体" width="600px" :close-on-click-modal="false" :show-close="false">
       <template #header>
         <div class="controller">
           <div class="left">
@@ -55,7 +49,7 @@ import { Back, Right, Crop, CollectionTag } from "@element-plus/icons-vue";
 const activeTab = ref("first");
 
 const isShow = ref(false);
-const showDialog = (fileList) => {
+const showDialog = fileList => {
   isShow.value = true;
 };
 const handleCancel = () => {
@@ -63,7 +57,7 @@ const handleCancel = () => {
 };
 const handleConfirm = () => {};
 defineExpose({
-  showDialog,
+  showDialog
 });
 </script>
 <style lang="less" scoped>

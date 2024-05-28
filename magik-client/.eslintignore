@@ -1,0 +1,6 @@
+.nuxt
+.vscode
+.output
+/node_modules
+tsconfig.json
+.eslintrc.js

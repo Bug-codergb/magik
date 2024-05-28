@@ -1,3 +1,1 @@
-<template>
-  社区
-</template>
+<template>社区</template>

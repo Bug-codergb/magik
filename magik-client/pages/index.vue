@@ -1,7 +1,6 @@
 <template></template>
 <script setup>
-const router = useRouter();
-router.push({
-  path:"/home"
-})
+await navigateTo({
+  path: "/home",
+});
 </script>
