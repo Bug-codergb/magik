@@ -1,3 +1,1 @@
-<template>
-  标签
-</template>
+<template>标签</template>

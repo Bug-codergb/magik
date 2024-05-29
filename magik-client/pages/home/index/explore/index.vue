@@ -1,3 +1,1 @@
-<template>
-  探索
-</template>
+<template>探索</template>

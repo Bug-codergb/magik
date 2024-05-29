@@ -1,3 +1,1 @@
-<template>
-  通知
-</template>
+<template>通知</template>

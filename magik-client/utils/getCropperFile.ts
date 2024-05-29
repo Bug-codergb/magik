@@ -1,9 +1,9 @@
-export default async (cropper: any, realWidth: number, file?: any): Promise<any> => {
+export default async (cropper?: any, realWidth: number = 500, file?: File): Promise<any> => {
   return await new Promise((resolve, reject) => {
     if (cropper) {
       const canvasFile = cropper.getCroppedCanvas({
         imageSmoothingQuality: "high",
-        width: 500,
+        width: realWidth,
         imageSmoothingEnabled: false,
         fillColor: "#fff"
       });

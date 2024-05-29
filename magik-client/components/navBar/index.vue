@@ -26,13 +26,14 @@
 <script setup lang="ts">
 import { menu } from "~/constant/menu";
 import Logo from "~/assets/svg/logo.vue";
+import type { INav } from "~/interface/nav";
 const currentIndex = ref(0);
 const router = useRouter();
 const currentRoute = useCurrentRoute();
 onMounted(() => {
   currentRoute.changeCurrentRoute(menu[0]);
 });
-const navClick = (item, index): void => {
+const navClick = (item: INav, index: number): void => {
   currentIndex.value = index;
   router.push({
     path: item.path

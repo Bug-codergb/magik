@@ -140,6 +140,9 @@ const handleSave = async (): void => {
     const formData = new FormData();
     formData.append("file", file);
     const res = await $fetch("/api/file/upload", { method: "post", body: formData });
+    if (res.code === 200) {
+      console.log(res.data);
+    }
   } catch (e) {
     console.log(e);
   }

@@ -7,10 +7,10 @@
     </ul>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 const tab = ["为你推荐", "正在关注"];
 const currentIndex = ref(0);
-const tabClick = (item, index) => {
+const tabClick = (item, index): void => {
   currentIndex.value = index;
 };
 </script>

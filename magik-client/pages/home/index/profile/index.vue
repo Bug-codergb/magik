@@ -1,3 +1,1 @@
-<template>
-  资料
-</template>
+<template>资料</template>

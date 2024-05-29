@@ -1,3 +1,4 @@
+import type { INav } from "~/interface/nav";
 import home from "~/assets/svg/home.vue";
 import explore from "~/assets/svg/explore.vue";
 import notify from "~/assets/svg/notify.vue";
@@ -9,7 +10,7 @@ import profile from "~/assets/svg/profile.vue";
 import more from "~/assets/svg/more.vue";
 
 import RecommendHeader from "~/components/recommend-header/index.vue";
-export const menu = [
+export const menu: INav[] = [
   {
     title: "主页",
     icon: home,
@@ -70,6 +71,7 @@ export const menu = [
     title: "更多",
     icon: more,
     isRoute: false,
+    path: "",
     header: <div>111</div>
   }
 ];

@@ -1,3 +1,1 @@
-<template>
-  列表
-</template>
+<template>列表</template>

@@ -1,5 +1,5 @@
 module.exports = {
-    root:true,
+  root:true,
     "env": {
         "browser": true,
         "node": true,
@@ -36,9 +36,9 @@ module.exports = {
         "vue/multi-word-component-names":"off",
         "prettier/prettier": "error",
         "no-console": "off",
-    "no-debugger":"off",
+        "no-debugger":"off",
         "no-var": "error",
-        "@typescript-eslint/no-floating-promises":"off"
-        
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/strict-boolean-expressions":"off"
     }
 }
