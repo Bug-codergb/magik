@@ -38,6 +38,7 @@ module.exports = {
         "no-console": "off",
     "no-debugger":"off",
         "no-var": "error",
+        "@typescript-eslint/no-floating-promises":"off"
         
     }
 }

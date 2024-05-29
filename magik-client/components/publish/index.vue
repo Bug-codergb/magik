@@ -10,7 +10,7 @@
       <ul class="img-list">
         <li v-for="(item, index) in fileList" :key="item" class="item">
           <div class="img-container">
-            <img :src="item" />
+            <img :src="item.url" />
             <div class="edit" @click="handleEditMedia(item, index)">编辑</div>
             <div class="delete">
               <el-icon><Close /></el-icon>
@@ -32,25 +32,30 @@
     <MediaCrop ref="mediaCropRef" />
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { Close } from "@element-plus/icons-vue";
 import Media from "~/assets/svg/media";
+import type { IMedia } from "~/interface/media";
+
 const user = useUserMsg();
 const formData = reactive({
   content: ""
 });
-const fileList = reactive([]);
-const handleFile = async e => {
-  const file = e.target.files[0];
+const fileList = reactive<IMedia[]>([]);
+const handleFile = async (e): void => {
+  const file: File = e.target.files[0];
   const formData = new FormData();
   formData.append("file", file);
   const res = await $fetch("/api/file/upload", { method: "post", body: formData });
-  fileList.push(res.data);
+  fileList.push({
+    url: res.data,
+    file
+  });
 };
 
 const mediaCropRef = ref();
-const handleEditMedia = (item, index) => {
-  mediaCropRef.value?.showDialog(fileList.value);
+const handleEditMedia = (item, index): void => {
+  mediaCropRef.value?.showDialog(fileList);
 };
 </script>
 <style scoped lang="less">

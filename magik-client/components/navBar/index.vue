@@ -23,7 +23,7 @@
     <div class="publish user-info">个人</div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { menu } from "~/constant/menu";
 import Logo from "~/assets/svg/logo.vue";
 const currentIndex = ref(0);
@@ -32,7 +32,7 @@ const currentRoute = useCurrentRoute();
 onMounted(() => {
   currentRoute.changeCurrentRoute(menu[0]);
 });
-const navClick = (item, index):void => {
+const navClick = (item, index): void => {
   currentIndex.value = index;
   router.push({
     path: item.path

@@ -1,25 +1,22 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   app: {
-    baseURL:"/"
+    baseURL: "/"
   },
   devServer: {
-    port:7877
+    port: 7877
   },
   nitro: {
     devProxy: {
       "/api": {
         target: "http://localhost:8888/",
         changeOrigin: true,
-        prependPath: true,
+        prependPath: true
       }
     },
     devServer: {
-      watch:[]
+      watch: []
     }
   },
-  modules: [
-    '@element-plus/nuxt',
-    '@pinia/nuxt',
-  ],
-})
+  modules: ["@element-plus/nuxt", "@pinia/nuxt"]
+});

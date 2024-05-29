@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "cropperjs": "^1.6.2",
     "element-plus": "^2.7.3",
     "less": "^4.2.0",
     "moment": "^2.30.1",
