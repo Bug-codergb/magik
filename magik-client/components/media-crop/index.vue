@@ -71,12 +71,12 @@
 import Cropper from "cropperjs";
 import { Back, Right, Crop, CollectionTag } from "@element-plus/icons-vue";
 import type { IMedia } from "~/interface/media";
-
+import type { R } from "~/interface/R";
 const activeTab = ref("first");
 
 const isShow = ref(false);
 const mediaList = ref<IMedia[]>([]);
-const imgRef = ref(null);
+const imgRef = ref<HTMLImageElement | null>(null);
 const currentMediaIndex = ref(0);
 const showDialog = (fileList: IMedia[]): void => {
   isShow.value = true;
@@ -110,15 +110,15 @@ const handleCancel = (): void => {
   isShow.value = false;
 };
 
-const cropperInstance = ref(null);
+const cropperInstance = ref<Cropper | null>(null);
 const initCropper = (): void => {
-  cropperInstance.value = new Cropper(imgRef.value, {
-    ready: function () {},
-    dragMode: "move",
-    viewMode: 1,
-    aspectRatio: NaN
-  });
-  console.log(cropperInstance);
+  imgRef.value &&
+    (cropperInstance.value = new Cropper(imgRef.value, {
+      ready: function () {},
+      dragMode: "move",
+      viewMode: 1,
+      aspectRatio: NaN
+    }));
 };
 
 const scale = ref(1);
@@ -133,13 +133,12 @@ const handleSliderInput = (e: number): void => {
   cropperInstance.value?.scale(scale);
 };
 
-const handleSave = async (): void => {
+const handleSave = async (): Promise<void> => {
   try {
-    const file: File | null = await getCropperFile(cropperInstance.value, 500, mediaList.value[currentMediaIndex.value].file);
-    console.log(file);
+    const file: Blob | null = await getCropperFile(cropperInstance.value, 500, mediaList.value[currentMediaIndex.value].file);
     const formData = new FormData();
-    formData.append("file", file);
-    const res = await $fetch("/api/file/upload", { method: "post", body: formData });
+    file && formData.append("file", file);
+    const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
     if (res.code === 200) {
       console.log(res.data);
     }
@@ -154,9 +153,10 @@ defineExpose({
 <style lang="less" scoped>
 .media-crop-container {
   .controller {
-    display: flex;
     align-items: center;
+
     justify-content: space-between;
+    display: flex;
     .left,
     .right {
       display: flex;

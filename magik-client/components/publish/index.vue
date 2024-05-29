@@ -8,7 +8,7 @@
         <textarea v-model="formData.content" rows="3" cols="4" type="textarea" placeholder="有什么新鲜事" />
       </div>
       <ul class="img-list">
-        <li v-for="(item, index) in fileList" :key="item" class="item">
+        <li v-for="(item, index) in fileList" :key="item.url" class="item">
           <div class="img-container">
             <img :src="item.url" />
             <div class="edit" @click="handleEditMedia(item, index)">编辑</div>
@@ -34,19 +34,20 @@
 </template>
 <script setup lang="ts">
 import { Close } from "@element-plus/icons-vue";
-import Media from "~/assets/svg/media";
+import Media from "~/assets/svg/media.vue";
 import type { IMedia } from "~/interface/media";
+import type { R } from "~/interface/R";
 
 const user = useUserMsg();
 const formData = reactive({
   content: ""
 });
 const fileList = reactive<IMedia[]>([]);
-const handleFile = async (e): void => {
+const handleFile = async (e: Event): Promise<void> => {
   const file: File = e.target.files[0];
   const formData = new FormData();
   formData.append("file", file);
-  const res = await $fetch("/api/file/upload", { method: "post", body: formData });
+  const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
   fileList.push({
     url: res.data,
     file
@@ -54,7 +55,7 @@ const handleFile = async (e): void => {
 };
 
 const mediaCropRef = ref();
-const handleEditMedia = (item, index): void => {
+const handleEditMedia = (item: IMedia, index: number): void => {
   mediaCropRef.value?.showDialog(fileList);
 };
 </script>
@@ -64,10 +65,10 @@ const handleEditMedia = (item, index): void => {
   align-items: flex-start;
   width: 100%;
   .left-container {
-    width: 50px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
+    width: 50px;
     img {
       width: 100%;
       height: 100%;
