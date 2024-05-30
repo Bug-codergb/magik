@@ -21,7 +21,7 @@
         </div>
       </template>
       <div>
-        <el-tabs v-model="activeTab" class="demo-tabs" :stretch="true">
+        <el-tabs v-model="activeTab" class="demo-tabs" :stretch="true" @tab-change="handleTabChange">
           <el-tab-pane label="User" name="first">
             <template #label>
               <el-icon><Crop /></el-icon>
@@ -38,30 +38,69 @@
             <template #label>
               <span>ALT</span>
             </template>
+            <div class="img-container">
+              <div class="container">
+                <img :src="staticImgURL" />
+              </div>
+            </div>
           </el-tab-pane>
           <el-tab-pane label="Role" name="third">
             <template #label>
               <el-icon><CollectionTag /></el-icon>
             </template>
+            <div class="img-container">
+              <div class="container">
+                <img :src="staticImgURL" />
+              </div>
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
       <template #footer>
         <div class="footer-container">
-          <div class="left">
-            <div class="circle" title="原始" :class="{ active: activeIndex === 0 }" @click="handleScaleChange(0)">
-              <div class="original"></div>
+          <template v-if="activeTab === 'first'">
+            <div class="left">
+              <div class="circle" title="原始" :class="{ active: activeIndex === 0 }" @click="handleScaleChange(0)">
+                <div class="original"></div>
+              </div>
+              <div class="circle" title="比例" :class="{ active: activeIndex === 1 }" @click="handleScaleChange(1)">
+                <div class="scale"></div>
+              </div>
+              <div class="circle" title="正方形" :class="{ active: activeIndex === 2 }" @click="handleScaleChange(2)">
+                <div class="rect"></div>
+              </div>
             </div>
-            <div class="circle" title="比例" :class="{ active: activeIndex === 1 }" @click="handleScaleChange(1)">
-              <div class="scale"></div>
+            <div class="right">
+              <el-slider v-model="scale" :min="1" :max="2" :step="0.01" :show-tooltip="false" @input="handleSliderInput" />
             </div>
-            <div class="circle" title="正方形" :class="{ active: activeIndex === 2 }" @click="handleScaleChange(2)">
-              <div class="rect"></div>
+          </template>
+          <template v-if="activeTab === 'second'">
+            <el-input
+              type="textarea"
+              placeholder="请输入图片描述，让大家更好理解您的图片"
+              :model-value="imgDesc"
+              @input="handleImgDesc"
+            />
+          </template>
+          <template v-if="activeTab === 'third'">
+            <div>
+              <h3>在这个帖子上添加内容警告</h3>
+              <p>选择一个类别，我们将在这个帖子上添加一个内容警告。这将有利于避免看到自己不想看到的内容</p>
+              <ul class="checkbox-list">
+                <li v-for="(item, index) in mediaList[currentMediaIndex].warn" :key="item.value">
+                  <div class="label">{{ item.value }}</div>
+                  <div class="right-content">
+                    <input
+                      :value="item.value"
+                      :checked="item.checked"
+                      type="checkbox"
+                      @change="e => handleWarnChange(e, item, index)"
+                    />
+                  </div>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div class="right">
-            <el-slider v-model="scale" :min="1" :max="2" :step="0.01" :show-tooltip="false" @input="handleSliderInput" />
-          </div>
+          </template>
         </div>
       </template>
     </el-dialog>
@@ -70,24 +109,28 @@
 <script setup lang="ts">
 import Cropper from "cropperjs";
 import { Back, Right, Crop, CollectionTag } from "@element-plus/icons-vue";
-import type { IMedia } from "~/interface/media";
+import type { IMedia, IWarn } from "~/interface/media";
 import type { R } from "~/interface/R";
+const emit = defineEmits<(e: "success", mediaList: IMedia[]) => void>();
 const activeTab = ref("first");
 
 const isShow = ref(false);
 const mediaList = ref<IMedia[]>([]);
 const imgRef = ref<HTMLImageElement | null>(null);
 const currentMediaIndex = ref(0);
-const showDialog = (fileList: IMedia[]): void => {
+const showDialog = (fileList: IMedia[], index: number = 0): void => {
+  cropperInstance.value = null;
+  imgRef.value = null;
   isShow.value = true;
   mediaList.value = fileList;
-  currentMediaIndex.value = 0;
+  currentMediaIndex.value = index;
+  activeTab.value = "first";
   nextTick(() => {
     initCropper();
   });
 };
 
-const handlePrev = (): void => {
+const handlePrev = async (): Promise<void> => {
   if (currentMediaIndex.value <= 0) {
     currentMediaIndex.value = 0;
     return;
@@ -95,8 +138,10 @@ const handlePrev = (): void => {
     currentMediaIndex.value -= 1;
   }
   cropperInstance.value?.replace(mediaList.value[currentMediaIndex.value].url);
+  staticImgURL.value = mediaList.value[currentMediaIndex.value].url;
+  imgDesc.value = mediaList.value[currentMediaIndex.value].description;
 };
-const handleNext = (): void => {
+const handleNext = async (): Promise<void> => {
   if (currentMediaIndex.value >= mediaList.value.length - 1) {
     currentMediaIndex.value = mediaList.value.length - 1;
     return;
@@ -104,9 +149,12 @@ const handleNext = (): void => {
     currentMediaIndex.value += 1;
   }
   cropperInstance.value?.replace(mediaList.value[currentMediaIndex.value].url);
+  staticImgURL.value = mediaList.value[currentMediaIndex.value].url;
+  imgDesc.value = mediaList.value[currentMediaIndex.value].description;
 };
 
 const handleCancel = (): void => {
+  cropperInstance.value?.destroy();
   isShow.value = false;
 };
 
@@ -114,10 +162,13 @@ const cropperInstance = ref<Cropper | null>(null);
 const initCropper = (): void => {
   imgRef.value &&
     (cropperInstance.value = new Cropper(imgRef.value, {
-      ready: function () {},
+      ready: function () {
+        console.log("ready");
+      },
       dragMode: "move",
       viewMode: 1,
-      aspectRatio: NaN
+      aspectRatio: NaN,
+      zoomOnWheel: false
     }));
 };
 
@@ -133,15 +184,41 @@ const handleSliderInput = (e: number): void => {
   cropperInstance.value?.scale(scale);
 };
 
+const handleGetCropFile = async (): Promise<Blob | null> => {
+  const rawFile = mediaList.value[currentMediaIndex.value].file;
+  const file: Blob | null = await getCropperFile(cropperInstance.value, 500, rawFile);
+  return file;
+};
+
+const staticImgURL = ref<string>("");
+const handleTabChange = async (): Promise<void> => {
+  const file = await handleGetCropFile();
+  const url = file && URL.createObjectURL(file);
+  staticImgURL.value = url ?? "";
+};
+
+const imgDesc = ref("");
+const handleImgDesc = (e: string): void => {
+  imgDesc.value = e;
+  mediaList.value[currentMediaIndex.value].description = e;
+};
+const handleWarnChange = (e: Event, item: IWarn, index: number): void => {
+  const value = e.currentTarget!.value;
+  const checked = e.currentTarget!.checked;
+  item.checked = checked;
+};
+
 const handleSave = async (): Promise<void> => {
   try {
-    const file: Blob | null = await getCropperFile(cropperInstance.value, 500, mediaList.value[currentMediaIndex.value].file);
-    const formData = new FormData();
-    file && formData.append("file", file);
-    const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
-    if (res.code === 200) {
-      console.log(res.data);
-    }
+    const file = await handleGetCropFile();
+    // const formData = new FormData();
+    // file && formData.append("file", file);
+    // const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
+    // if (res.code === 200) {
+    //   console.log(res.data);
+    // }
+    file && (mediaList.value[currentMediaIndex.value].file = file);
+    emit("success", mediaList.value);
   } catch (e) {
     console.log(e);
   }
@@ -150,6 +227,7 @@ defineExpose({
   showDialog
 });
 </script>
+<style lang="less"></style>
 <style lang="less" scoped>
 .media-crop-container {
   .controller {
@@ -263,6 +341,25 @@ defineExpose({
     }
     .right {
       width: 40%;
+    }
+    h3,
+    p {
+      text-align: left;
+    }
+    p {
+      margin: 20px 0;
+      font-size: 14px;
+      color: #566370;
+    }
+    .checkbox-list {
+      width: 100%;
+      & > li {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+      }
     }
   }
 }

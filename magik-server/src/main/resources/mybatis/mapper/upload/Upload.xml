@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.magik.mapper.upload.UploadMapper">
   <insert id="uploadFile">
-    insert into file(id,originalname,url,filename,size) values (#{id},#{originalname},#{url},#{filename},#{size});
+    insert into file(id,originalname,url,filename,size,description) values (#{id},#{originalname},#{url},#{filename},#{size},#{description});
   </insert>
 </mapper>

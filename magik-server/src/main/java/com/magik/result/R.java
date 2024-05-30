@@ -11,4 +11,7 @@ public class R<T> {
   public int code;
   public String message;
   public T data;
+  public static <K> R<K> ok(K data){
+    return new R<>(200,"success",data);
+  }
 }

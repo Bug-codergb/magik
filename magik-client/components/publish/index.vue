@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <MediaCrop ref="mediaCropRef" />
+    <MediaCrop ref="mediaCropRef" @success="handleFinishMedia" />
   </div>
 </template>
 <script setup lang="ts">
@@ -47,16 +47,24 @@ const handleFile = async (e: Event): Promise<void> => {
   const file: File = e.target.files[0];
   const formData = new FormData();
   formData.append("file", file);
-  const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
+  // const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
   fileList.push({
-    url: res.data,
-    file
+    url: URL.createObjectURL(file),
+    file,
+    description: "",
+    warn: [
+      { value: "暴力", checked: false },
+      { value: "敏感内容", checked: false }
+    ]
   });
 };
 
 const mediaCropRef = ref();
 const handleEditMedia = (item: IMedia, index: number): void => {
-  mediaCropRef.value?.showDialog(fileList);
+  mediaCropRef.value?.showDialog(fileList, index);
+};
+const handleFinishMedia = (mediaList: IMedia[]) => {
+  console.log(mediaList);
 };
 </script>
 <style scoped lang="less">

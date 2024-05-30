@@ -39,6 +39,7 @@ module.exports = {
         "no-debugger":"off",
         "no-var": "error",
         "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/strict-boolean-expressions":"off"
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/no-non-null-assertion":"off"
     }
 }

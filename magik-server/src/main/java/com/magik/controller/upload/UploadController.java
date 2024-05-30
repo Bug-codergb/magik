@@ -24,7 +24,7 @@ public class UploadController {
   @Resource
   private MinioClient minioClient;
   @PostMapping("/upload")
-  public R<String> uploadFile(@RequestBody MultipartFile file) throws Exception{
+  public R<String> uploadFile(@RequestParam("file") MultipartFile file) throws Exception{
     String fileType = file.getContentType().substring(0,file.getContentType().indexOf("/"));
     String filename = new FileUniqueName().getFileUniqueName(file.getOriginalFilename());
 
@@ -59,13 +59,15 @@ public class UploadController {
               .contentType(file.getContentType())
               .stream(file.getInputStream(),file.getSize(),-1).build());
 
+    String desc="";
     Upload uploadFile = new Upload();
     uploadFile.setId(new Date().getTime()+"");
     uploadFile.setOriginalname(file.getOriginalFilename());
     uploadFile.setSize(file.getSize()+"");
     uploadFile.setFilename(filename);
+    uploadFile.setDescription(desc);
     uploadFile.setUrl(Host.MINIO_HOST.getHOST()+"/"+fileType+"/"+filename);
     uploadService.uploadFile(uploadFile);
-    return new R<String>(200,"success",uploadFile.getUrl());
+    return R.ok(uploadFile.getUrl());
   }
 }

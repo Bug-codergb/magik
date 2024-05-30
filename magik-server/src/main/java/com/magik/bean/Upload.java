@@ -17,6 +17,7 @@ public class Upload {
   private String url;
   private String filename;
   private String size;
+  private String description;
   private Date createTime;
   private Date updateTime;
 }
