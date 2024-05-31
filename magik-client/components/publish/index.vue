@@ -25,7 +25,7 @@
           <Media />
         </div>
         <div class="right">
-          <button class="btn">发帖</button>
+          <button class="btn" @click="handlePublish">发帖</button>
         </div>
       </div>
     </div>
@@ -36,19 +36,18 @@
 import { Close } from "@element-plus/icons-vue";
 import Media from "~/assets/svg/media.vue";
 import type { IMedia } from "~/interface/media";
-import type { R } from "~/interface/R";
 
 const user = useUserMsg();
 const formData = reactive({
   content: ""
 });
-const fileList = reactive<IMedia[]>([]);
+const fileList = ref<IMedia[]>([]);
 const handleFile = async (e: Event): Promise<void> => {
   const file: File = e.target.files[0];
   const formData = new FormData();
   formData.append("file", file);
-  // const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
-  fileList.push({
+
+  fileList.value.push({
     url: URL.createObjectURL(file),
     file,
     description: "",
@@ -61,10 +60,25 @@ const handleFile = async (e: Event): Promise<void> => {
 
 const mediaCropRef = ref();
 const handleEditMedia = (item: IMedia, index: number): void => {
-  mediaCropRef.value?.showDialog(fileList, index);
+  mediaCropRef.value?.showDialog(fileList.value, index);
 };
-const handleFinishMedia = (mediaList: IMedia[]) => {
-  console.log(mediaList);
+const handleFinishMedia = async (mediaList: IMedia[]): Promise<void> => {
+  fileList.value = mediaList;
+};
+const handlePublish = async (): Promise<void> => {
+  const formData = new FormData();
+  for (const item of fileList.value) {
+    formData.append("file", item.file);
+    formData.append("warn", JSON.stringify(item.warn));
+    formData.append("desc", item.description);
+  }
+  const res = await $fetch("/api/file/upload", {
+    method: "post",
+    body: formData
+  });
+  if (res) {
+    console.log("haha");
+  }
 };
 </script>
 <style scoped lang="less">

@@ -120,11 +120,13 @@ const imgRef = ref<HTMLImageElement | null>(null);
 const currentMediaIndex = ref(0);
 const showDialog = (fileList: IMedia[], index: number = 0): void => {
   cropperInstance.value = null;
-  imgRef.value = null;
+  // imgRef.value = null;
   isShow.value = true;
   mediaList.value = fileList;
   currentMediaIndex.value = index;
   activeTab.value = "first";
+
+  imgDesc.value && (imgDesc.value = mediaList.value[currentMediaIndex.value].description);
   nextTick(() => {
     initCropper();
   });
@@ -160,6 +162,7 @@ const handleCancel = (): void => {
 
 const cropperInstance = ref<Cropper | null>(null);
 const initCropper = (): void => {
+  console.log(imgRef.value);
   imgRef.value &&
     (cropperInstance.value = new Cropper(imgRef.value, {
       ready: function () {
@@ -211,14 +214,14 @@ const handleWarnChange = (e: Event, item: IWarn, index: number): void => {
 const handleSave = async (): Promise<void> => {
   try {
     const file = await handleGetCropFile();
-    // const formData = new FormData();
-    // file && formData.append("file", file);
-    // const res = await $fetch<R<string>>("/api/file/upload", { method: "post", body: formData });
-    // if (res.code === 200) {
-    //   console.log(res.data);
-    // }
-    file && (mediaList.value[currentMediaIndex.value].file = file);
+    if (file) {
+      mediaList.value[currentMediaIndex.value].file = file;
+      mediaList.value[currentMediaIndex.value].url = URL.createObjectURL(file);
+    }
+
     emit("success", mediaList.value);
+    cropperInstance.value?.destroy();
+    isShow.value = false;
   } catch (e) {
     console.log(e);
   }
