@@ -18,5 +18,5 @@ export default defineNuxtConfig({
       watch: []
     }
   },
-  modules: ["@element-plus/nuxt", "@pinia/nuxt"]
+  modules: ["@element-plus/nuxt", "@pinia/nuxt", "@vueuse/nuxt"]
 });

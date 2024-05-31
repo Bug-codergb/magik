@@ -5,13 +5,14 @@
         <Logo />
       </div>
     </div>
+    <!-- @click="navClick(item, index)" -->
     <ul class="list">
       <li
         v-for="(item, index) in menu"
         :key="item.label"
+        @click="navClick(item, index)"
         class="item"
         :class="{ active: index === currentIndex }"
-        @click="navClick(item, index)"
       >
         <div class="shadow">
           <component :is="item.icon" />
@@ -35,10 +36,11 @@ onMounted(() => {
 });
 const navClick = (item: INav, index: number): void => {
   currentIndex.value = index;
-  router.push({
+  navigateTo({
     path: item.path
   });
   currentRoute.changeCurrentRoute(item);
+  useHead({ title: `${item.title} / magik` });
 };
 </script>
 <style lang="less">
