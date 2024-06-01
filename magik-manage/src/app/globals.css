@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+
+}
+
+@media (prefers-color-scheme: dark) {
+
+}
+
+body,html {
+  color: #fff;
+  width: 100%;
+  height: 100%;
+}
+.ant-layout-sider,.ant-layout-header,.ant-layout-footer{
+  background: #fff!important;
+}
+.card{
+  box-sizing: border-box;
+  padding: 20px;
+  overflow-x: hidden;
+  background-color: #fff;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+}
+.table-box{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  flex-direction: column;
+}
+.table-box,
+.ant-table-wrapper,
+.ant-spin-nested-loading,
+.ant-spin-container,
+.ant-table,.ant-table-container{
+  height: 100%;
+}
+.table-box .ant-table-header{
+
+  overflow: visible!important;
+}
+.table-box .ant-table-header table{
+  height: 100%;
+  table-layout: auto;
+}
+.table-box .ant-table-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
