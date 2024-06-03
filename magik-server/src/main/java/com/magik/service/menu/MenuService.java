@@ -18,4 +18,7 @@ public class MenuService {
   public List<Menu> getMenuList(){
     return menuMapper.getMenuList();
   }
+  public int deleteMenuById(String id){
+    return menuMapper.deleteMenuById(id);
+  }
 }

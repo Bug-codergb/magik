@@ -17,6 +17,7 @@ public class Menu {
   private List<Menu> children;
   private String title;
   private String path;
+  private int sort;
   private String redirect;
   private String icon;
   private String component;

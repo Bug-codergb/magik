@@ -5,10 +5,7 @@ import com.magik.dto.menu.MenuDTO;
 import com.magik.result.R;
 import com.magik.service.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -30,5 +27,10 @@ public class MenuController {
     List<Menu> menuList = menuService.getMenuList();
     return R.ok(menuList);
   }
-
+  @PostMapping("/delete/{id}")
+  public R<String> deleteMenu(@PathVariable("id") String id){
+    System.out.println(id);
+    menuService.deleteMenuById(id);
+    return R.ok("");
+  }
 }

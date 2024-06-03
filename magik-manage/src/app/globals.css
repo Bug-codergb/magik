@@ -42,8 +42,7 @@ body,html {
   height: 100%;
 }
 .table-box .ant-table-header{
-
-  overflow: visible!important;
+  overflow-y: visible!important;
 }
 .table-box .ant-table-header table{
   height: 100%;

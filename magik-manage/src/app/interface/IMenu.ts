@@ -8,6 +8,7 @@ export interface IMenu {
   icon: string
   component: string
   meta: string
-  createTime: string
-  updateTime: string
+  sort:number
+  createTime?: string
+  updateTime?: string
 }

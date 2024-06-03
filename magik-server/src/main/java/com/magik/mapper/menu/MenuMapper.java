@@ -10,4 +10,5 @@ public interface MenuMapper {
   public int createMenu(MenuDTO menuDTO);
   public List<Menu> getMenuList();
   public List<Menu> getChildrenMenu(@Param("parentId") String parentId);
+  public int deleteMenuById(@Param("id") String id);
 }
