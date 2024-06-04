@@ -34,7 +34,23 @@ body,html {
   flex: 1;
   flex-direction: column;
 }
-.table-box,
+.table-box .table-container{
+  flex: 1;
+  overflow-y: hidden;
+}
+
+.table-box .table-container .ant-spin-nested-loading,
+.table-box .table-container .ant-spin-container,
+.table-box .table-container .ant-table,
+.table-box .table-container .ant-table-container,
+.table-box .table-container .ant-table-wrapper{
+  height: 100%;
+}
+.table-box .table-container .ant-table-body{
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+}
+/*.table-box,
 .ant-table-wrapper,
 .ant-spin-nested-loading,
 .ant-spin-container,
@@ -52,4 +68,4 @@ body,html {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
+}*/
