@@ -1,7 +1,7 @@
-import ProTable from "@/app/components/pro-table/index"
-import {Button, Space, TableColumnsType,Pagination} from "antd";
-import {IMenu} from "@/app/interface/IMenu";
-const Moment=()=>{
+import ProTable from "@/app/components/pro-table/index";
+import { Button, Space, TableColumnsType, Pagination } from "antd";
+import { IMenu } from "@/app/interface/IMenu";
+const Moment = () => {
   const columns: TableColumnsType<IMenu> = [
     {
       title: "名称",
@@ -17,10 +17,10 @@ const Moment=()=>{
       width: 200,
     },
     {
-      title:"排序",
-      dataIndex:"sort",
-      key:"sort",
-      width:100
+      title: "排序",
+      dataIndex: "sort",
+      key: "sort",
+      width: 100,
     },
     {
       title: "重定向",
@@ -54,8 +54,15 @@ const Moment=()=>{
     },
   ];
 
-  return <div className={"table-box card"}>
-    <ProTable<IMenu> columns={columns} url={'/api/menu/list'} pagination={true} params={{}}/>
-  </div>
-}
+  return (
+    <div className={"table-box card"}>
+      <ProTable<IMenu>
+        columns={columns}
+        url={"/api/menu/list"}
+        pagination={true}
+        params={{}}
+      />
+    </div>
+  );
+};
 export default Moment;

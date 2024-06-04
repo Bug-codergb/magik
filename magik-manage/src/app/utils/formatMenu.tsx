@@ -10,7 +10,7 @@ export function formatMenu(menu: IMenu[]): MenuItem[] {
   for (let item of menu) {
     let Component = iconList[item.icon];
     let row: MenuItem = {
-      path:item.path,
+      path: item.path,
       key: item.id,
       label: item.title,
       icon: Component ? <Component /> : "",
