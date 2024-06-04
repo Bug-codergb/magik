@@ -9,7 +9,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Layout className={"size-full"}>
+    <Layout className={"size-full text-slate-950"}>
       <Sider width="200px" className={"h-full bg-white"}>
         <Nav />
       </Sider>
