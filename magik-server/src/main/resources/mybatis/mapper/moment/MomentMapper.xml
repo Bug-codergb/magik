@@ -18,6 +18,10 @@
     <result property="view" column="view"></result>
     <result property="createTime" column="createTime"></result>
     <result property="updateTime" column="updateTime"></result>
+    <association property="user"
+                 javaType="User"
+                 select="com.magik.mapper.user.UserMapper.getUserById"
+                 column="id=userId"></association>
     <collection property="mediaList"
                 ofType="MomentFile"
                 select="com.magik.mapper.moment.MomentMapper.getMomentFile"

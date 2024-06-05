@@ -1,6 +1,7 @@
 package com.magik.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Date;
 public class User {
   private String userId;
   private String userName;
+  @JsonIgnore
   private String password;
   private String avatarUrl;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
