@@ -3,7 +3,7 @@ package com.magik.controller.moment;
 import com.github.pagehelper.Page;
 import com.magik.bean.Moment;
 import com.magik.bean.MomentFile;
-import com.magik.bean.PageResult;
+import com.magik.result.PageResult;
 import com.magik.dto.moment.MomentDTO;
 import com.magik.result.R;
 import com.magik.service.moment.MomentService;

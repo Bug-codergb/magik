@@ -1,6 +1,5 @@
-package com.magik.bean;
+package com.magik.result;
 import com.github.pagehelper.Page;
-import com.magik.result.R;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

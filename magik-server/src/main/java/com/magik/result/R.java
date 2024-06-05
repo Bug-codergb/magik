@@ -1,6 +1,5 @@
 package com.magik.result;
 
-import com.magik.bean.PageResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
