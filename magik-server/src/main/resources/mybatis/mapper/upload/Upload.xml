@@ -6,4 +6,9 @@
   <insert id="uploadFile">
     insert into file(id,originalname,url,filename,size,description,warn) values (#{id},#{originalname},#{url},#{filename},#{size},#{description},#{warn});
   </insert>
+  <select id="getFileDetail" resultType="Upload">
+    select *
+    from file
+    where id=#{id}
+  </select>
 </mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.magik.mapper.moment.MomentMapper">
+  <insert id="createMoment">
+    insert into moment(id,content,userId) values (#{id},#{content},#{userId});
+  </insert>
+  <insert id="addFileToMoment" parameterType="java.util.List">
+    insert into moment_file(mId,fId) values 
+    <foreach collection="list" separator="," item="item">
+      (#{item.momentId},#{item.fileId})
+    </foreach>
+  </insert>
+  <resultMap id="momentResultMap" type="Moment">
+    <id property="id" column="id"></id>
+    <result property="content" column="content"></result>
+    <result property="view" column="view"></result>
+    <result property="createTime" column="createTime"></result>
+    <result property="updateTime" column="updateTime"></result>
+    <collection property="mediaList"
+                ofType="MomentFile"
+                select="com.magik.mapper.moment.MomentMapper.getMomentFile"
+                column="id"></collection>
+  </resultMap>
+  <select id="getAllMoment" resultMap="momentResultMap">
+    select *
+    from moment
+  </select>
+
+  <select id="getMomentFile" resultType="Upload">
+    select *
+    from moment_file as mf
+    left join file as f on f.id =mf.fId
+    where mf.mId=#{id}
+  </select>
+</mapper>

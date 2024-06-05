@@ -78,6 +78,7 @@ const handlePublish = async (): Promise<void> => {
   });
   if (res) {
     console.log("haha");
+    console.log(res.data);
   }
 };
 </script>
