@@ -11,7 +11,7 @@ const Nav: FC = (): React.ReactNode => {
   const [nav, setNav] = useState<IMenu[]>([]);
   const router = useRouter()
   useEffect(() => {
-    fetch("/api/menu/list", {
+    fetch("/api/menu/list?page=1&limit=1000", {
       method: "post",
     })
       .then((res) => {
@@ -19,7 +19,7 @@ const Nav: FC = (): React.ReactNode => {
       })
       .then((res) => {
         if (res.code === 200) {
-          setNav(res.data);
+          setNav(res.rows);
         }
       });
   }, []);
@@ -42,8 +42,8 @@ const Nav: FC = (): React.ReactNode => {
       <Menu
         onClick={onClick}
         style={{ width: "100%" }}
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        defaultSelectedKeys={["1717422759317"]}
+        defaultOpenKeys={["1717421156223"]}
         mode="inline"
         items={rawNav}
       />

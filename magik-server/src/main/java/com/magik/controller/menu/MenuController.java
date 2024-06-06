@@ -1,7 +1,9 @@
 package com.magik.controller.menu;
 
+import com.github.pagehelper.Page;
 import com.magik.bean.Menu;
 import com.magik.dto.menu.MenuDTO;
+import com.magik.result.PageResult;
 import com.magik.result.R;
 import com.magik.service.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,9 @@ public class MenuController {
     return R.ok("");
   }
   @PostMapping("/list")
-  public R<List<Menu>> getMenuList(){
-    List<Menu> menuList = menuService.getMenuList();
-    return R.ok(menuList);
+  public PageResult<Menu> getMenuList(@RequestParam("page") Integer page,
+                                      @RequestParam("limit") Integer limit){
+    return PageResult.success(menuService.getMenuList(page,limit));
   }
   @PostMapping("/delete/{id}")
   public R<String> deleteMenu(@PathVariable("id") String id){

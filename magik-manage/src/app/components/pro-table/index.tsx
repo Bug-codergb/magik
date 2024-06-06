@@ -21,10 +21,12 @@ function ProTable<T>(props: IProps<T>) {
     method,
     tableHeader,
     tableToolButton,
+    pagination
   } = props;
   const [tableData, setTableData] = useState<T[]>([]);
+  const [total,setTotal] = useState<number>(0)
   const getTableData = () => {
-    fetch(url, {
+    fetch(`${url}?page=${1}&limit=${10}`, {
       method: method ?? "post",
     })
       .then((res) => {
@@ -32,7 +34,8 @@ function ProTable<T>(props: IProps<T>) {
       })
       .then((res) => {
         if (res.code === 200) {
-          setTableData(res.data);
+          pagination ? setTableData(res.rows): setTableData(res.data);
+          pagination? setTotal(res.total):''
         }
       });
   };
@@ -65,9 +68,13 @@ function ProTable<T>(props: IProps<T>) {
       </div>
       <Flex justify={"flex-end"} className={"pt-4"}>
         <Pagination
-          showQuickJumper
-          defaultCurrent={0}
-          total={500}
+          showQuickJumper={false}
+          defaultCurrent={1}
+          defaultPageSize={10}
+          pageSize={10}
+          showSizeChanger={true}
+          showTotal={(total,range)=>`共${total}条`}
+          total={total}
           onChange={onChange}
           onShowSizeChange={sizeChange}
         />

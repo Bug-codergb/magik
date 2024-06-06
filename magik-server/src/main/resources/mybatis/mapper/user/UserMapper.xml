@@ -8,4 +8,33 @@
     from user
     where userId=#{id}
   </select>
+  <insert id="createUser">
+    insert into user(userId,userName,password,avatar) values (#{userId},#{userName},#{password},#{avatar})
+  </insert>
+  <insert id="setUserRole">
+    insert into user_role(roleId,userId) values
+    <foreach collection="list" separator="," item="item">
+      (#{item.roleId},#{item.userId})
+    </foreach>
+  </insert>
+  <resultMap id="userResultMap" type="User">
+    <id property="userId" column="userId"></id>
+    <result property="userName" column="userName"></result>
+    <result property="createTime" column="createTime"></result>
+    <result property="updateTime" column="updateTime"></result>
+    <result property="avatar" column="avatar"></result>
+    <collection property="role"
+                ofType="Role"
+                select="com.magik.mapper.user.UserMapper.getUserRole" column="userId"></collection>
+  </resultMap>
+  <select id="getUserList" resultType="User" resultMap="userResultMap">
+    select *
+    from user
+  </select>
+  <select id="getUserRole" resultType="Role">
+    select *
+    from user_role as ur
+    left join role as r on r.id = ur.roleId
+    where ur.userId=#{userId}
+  </select>
 </mapper>
