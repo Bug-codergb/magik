@@ -27,6 +27,11 @@
         </div>
       </div>
       <div class="content" v-html="moment.content"></div>
+      <ul class="media-list">
+        <li v-for="item in moment.mediaList" :key="item.id">
+          <img :src="item.url" />
+        </li>
+      </ul>
       <div class="controller">
         <ul class="controller-list">
           <li>
@@ -110,9 +115,30 @@ const props = defineProps<{ moment: IMoment }>();
     }
     .content {
       font-size: 14px;
+      margin: 0 0 15px 0;
+    }
+    .media-list {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      & > li {
+        width: 49.2%;
+        aspect-ratio: 16/9;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 0 10px 0;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          vertical-align: baseline;
+        }
+      }
     }
     .controller {
-      margin: 15px 0 0 0;
+      margin: 0;
       .controller-list {
         display: flex;
         justify-content: space-between;
