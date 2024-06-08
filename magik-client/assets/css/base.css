@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "system-ui Segoe UI, Roboto, Helvetica, Arial, sans-serif"
 }
 html,body{
   width: 100%;

@@ -50,22 +50,3 @@ body,html {
   height: calc(100% - 50px);
   overflow-y: scroll;
 }
-/*.table-box,
-.ant-table-wrapper,
-.ant-spin-nested-loading,
-.ant-spin-container,
-.ant-table,.ant-table-container{
-  height: 100%;
-}
-.table-box .ant-table-header{
-  overflow-y: visible!important;
-}
-.table-box .ant-table-header table{
-  height: 100%;
-  table-layout: auto;
-}
-.table-box .ant-table-container{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}*/

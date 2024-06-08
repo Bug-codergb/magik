@@ -1,51 +1,44 @@
+"use client"
 import ProTable from "@/app/components/pro-table/index";
 import { Button, Space, TableColumnsType, Pagination } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
+import {IMoment} from "@/app/interface/IMoment";
 const Moment = () => {
-  const columns: TableColumnsType<IMenu> = [
+  const columns: TableColumnsType<IMoment> = [
     {
-      title: "名称",
-      dataIndex: "title",
+      title: "内容",
+      dataIndex: "content",
       key: "title",
       width: 200,
       fixed: "left",
     },
     {
-      title: "路径",
-      dataIndex: "path",
+      title: "浏览量",
+      dataIndex: "view",
       key: "path",
       width: 200,
     },
     {
-      title: "排序",
-      dataIndex: "sort",
+      title: "用户",
       key: "sort",
       width: 100,
+      render:(_,row:IMoment)=>{
+        return <span>{row.user.userName}</span>
+      }
     },
     {
-      title: "重定向",
+      title: "媒体文件",
       dataIndex: "redirect",
       key: "redirect",
       width: 200,
     },
     {
-      title: "图标",
-      dataIndex: "icon",
+      title: "创建时间",
+      dataIndex: "createTime",
       key: "icon",
       width: 200,
     },
-    {
-      title: "组件",
-      dataIndex: "component",
-      key: "component",
-      width: 200,
-    },
-    {
-      title: "路由元数据",
-      dataIndex: "meta",
-      key: "meta",
-      width: 200,
-    },
+
     {
       title: "操作",
       key: "action",
@@ -58,7 +51,7 @@ const Moment = () => {
     <div className={"table-box card"}>
       <ProTable<IMenu>
         columns={columns}
-        url={"/api/menu/list"}
+        url={"/api/moment/list"}
         pagination={true}
         params={{}}
       />

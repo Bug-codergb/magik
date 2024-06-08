@@ -66,19 +66,29 @@ const handleFinishMedia = async (mediaList: IMedia[]): Promise<void> => {
   fileList.value = mediaList;
 };
 const handlePublish = async (): Promise<void> => {
-  const formData = new FormData();
+  const rawFormData = new FormData();
   for (const item of fileList.value) {
-    formData.append("file", item.file);
-    formData.append("warn", JSON.stringify(item.warn));
-    formData.append("desc", item.description);
+    rawFormData.append("file", item.file);
+    rawFormData.append("warn", JSON.stringify(item.warn));
+    rawFormData.append("desc", item.description);
   }
   const res = await $fetch("/api/file/upload", {
     method: "post",
-    body: formData
+    body: rawFormData
   });
-  if (res) {
-    console.log("haha");
-    console.log(res.data);
+  if (res.code === 200) {
+    const filelist = res.data.map(item => item.id);
+    const ret = await $fetch("/api/moment/create", {
+      method: "post",
+      body: {
+        content: formData.content,
+        userId: "110",
+        filelist
+      }
+    });
+    if (ret.code === 200) {
+      ElMessage.success("创建成功");
+    }
   }
 };
 </script>
