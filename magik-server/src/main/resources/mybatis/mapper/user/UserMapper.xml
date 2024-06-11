@@ -9,7 +9,7 @@
     where userId=#{id}
   </select>
   <insert id="createUser">
-    insert into user(userId,userName,password,avatar) values (#{userId},#{userName},#{password},#{avatar})
+    insert into user(userId,userName,password,avatar,gender) values (#{userId},#{userName},#{password},#{avatar},#{gender})
   </insert>
   <insert id="setUserRole">
     insert into user_role(roleId,userId) values
