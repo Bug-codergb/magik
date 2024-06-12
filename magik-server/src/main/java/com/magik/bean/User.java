@@ -19,6 +19,7 @@ public class User {
   private String password;
   private int gender;
   private String avatar;
+  private String avatarUrl;
   private List<Role> role;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   private Date createTime;

@@ -22,7 +22,7 @@
     <result property="userName" column="userName"></result>
     <result property="createTime" column="createTime"></result>
     <result property="updateTime" column="updateTime"></result>
-    <result property="avatar" column="avatar"></result>
+    <result property="avatarUrl" column="url"></result>
     <collection property="role"
                 ofType="Role"
                 select="com.magik.mapper.user.UserMapper.getUserRole" column="userId"></collection>
@@ -30,6 +30,13 @@
   <select id="getUserList" resultType="User" resultMap="userResultMap">
     select *
     from user
+    left join file as f on f.id = user.avatar
+  </select>
+  <select id="getUserAvatar">
+    select f.url
+    from file as f
+    left join user as u on u.avatar
+    where u.userId=#{userId}
   </select>
   <select id="getUserRole" resultType="Role">
     select *

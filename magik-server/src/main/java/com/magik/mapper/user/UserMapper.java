@@ -14,4 +14,5 @@ public interface UserMapper {
   public int setUserRole(List<UserRole> userRoleList);
   public List<User> getUserList(Integer page,Integer limit);
   public List<Role> getUserRole(@Param("userId") String userId);
+  public String getUserAvatar(@Param("userId") String userId);
 }
