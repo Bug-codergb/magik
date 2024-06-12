@@ -2,8 +2,8 @@
 import ProTable from "@/app/components/pro-table/index";
 import CreateUser from "./components/createUser/index";
 import type { TableColumnsType } from "antd";
-import { Button, Space, Tag ,Avatar} from "antd";
-import { UserOutlined } from '@ant-design/icons';
+import { Button, Space, Tag, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import type { IUser } from "@/app/interface/IUser";
 import { useRef } from "react";
 const type: string[] = ["success", "processing", "error", "warning", "default"];
@@ -16,9 +16,9 @@ const Page = () => {
     {
       title: "头像",
       dataIndex: "avatarUrl",
-      render:(_,row)=>{
-        return <Avatar size={64} icon={<UserOutlined />} src={row.avatarUrl}/>
-      }
+      render: (_, row) => {
+        return <Avatar size={64} icon={<UserOutlined />} src={row.avatarUrl} />;
+      },
     },
     {
       title: "角色",
