@@ -17,6 +17,7 @@ public class User {
   private String userName;
 
   private String password;
+  private String token;
   private int gender;
   private String avatar;
   private String avatarUrl;

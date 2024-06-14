@@ -21,6 +21,9 @@ public class UserService {
   public int setUserRole(List<UserRole> userRoleList){
     return userMapper.setUserRole(userRoleList);
   }
+  public User getUserById(String userId){
+    return userMapper.getUserById(userId);
+  }
   public int deleteUserRole(String userId){
     return userMapper.deleteUserRole(userId);
   }
