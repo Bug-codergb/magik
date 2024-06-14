@@ -12,7 +12,10 @@ public interface UserMapper {
   public User getUserById(@Param("id") String id);
   public int createUser(UserDTO userDTO);
   public int setUserRole(List<UserRole> userRoleList);
+  public int deleteUserRole(@Param("userId") String userId);
   public List<User> getUserList(Integer page,Integer limit);
   public List<Role> getUserRole(@Param("userId") String userId);
   public String getUserAvatar(@Param("userId") String userId);
+  public int deleteUser(@Param("userId") String userId);
+  public int updateUser(UserDTO user);
 }

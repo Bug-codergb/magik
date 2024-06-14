@@ -37,7 +37,7 @@ const Nav: FC = (): React.ReactNode => {
   };
 
   return (
-    <div className={"size-full text-slate-950"}>
+    <div className={"size-full text-slate-950 flex flex-col"}>
       <div className={"h-16 text-slate-950"}></div>
       <Menu
         onClick={onClick}
@@ -46,6 +46,7 @@ const Nav: FC = (): React.ReactNode => {
         defaultOpenKeys={["1717421156223"]}
         mode="inline"
         items={rawNav}
+        className={"flex-1 overflow-y-auto"}
       />
     </div>
   );

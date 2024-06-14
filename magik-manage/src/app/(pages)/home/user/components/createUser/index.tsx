@@ -11,18 +11,22 @@ import {
 import type { RadioChangeEvent } from "antd";
 import ProDrawer from "@/app/components/pro-drawer";
 import UploadFile from "@/app/components/upload-file";
-import { Form, Input, Radio, Select } from "antd";
+import { Form, Input, Radio, Select,message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { IRole } from "@/app/interface/IRole";
+import {IUser} from "@/app/interface/IUser";
 
 interface IProps {
   success?: () => void;
 }
-interface IFormData {
+interface IFormData{
+  userId:string;
   userName: string;
   password: string;
   gender: number;
-  avatar: "";
+  avatar: string;
+  avatarUrl:string;
+  roleList:string[]
 }
 const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   const { success } = props;
@@ -31,10 +35,13 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   const [open, setOpen] = useState(false);
 
   const [user, setUser] = useState<IFormData>({
+    userId:"",
     userName: "",
     password: "",
     gender: 1,
     avatar: "",
+    roleList:[],
+    avatarUrl:''
   });
   const [formRef] = Form.useForm();
 
@@ -57,9 +64,21 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   const onConfirm = () => {
     formRef.submit();
   };
-  const showDrawer = () => {
+
+  const isUpdate = useRef<boolean>(false);
+  const showDrawer = (val?:IUser) => {
     setOpen(true);
     formRef.resetFields();
+    setShowAvatar(false);
+    isUpdate.current = Boolean(val);
+    isUpdate.current ? setTitle("更新用户"):setTitle("新增用户");
+    if(isUpdate.current){
+      val!.roleList = val!.role.map((item)=>item.id)
+      setUser({...val!});
+      setShowAvatar(true);
+      setAvatarUrl(val!.avatar ? val!.avatarUrl:"");
+      formRef.setFieldsValue({...val!});
+    }
   };
   useImperativeHandle(propsRef, () => {
     return {
@@ -76,7 +95,7 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
     let params = {
       ...val,
     };
-    fetch("/api/user/create", {
+    fetch(isUpdate.current ? `/api/user/update/${user.userId}`:"/api/user/create", {
       body: JSON.stringify(params),
       method: "post",
       headers: {
@@ -89,6 +108,7 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
       .then(() => {
         setOpen(false);
         success && success();
+        message.success("更新成功");
       });
   };
 
@@ -113,7 +133,6 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
       method: "post",
     });
     const res = await response.json();
-    console.log(res);
     if (res.code === 200) {
       const data = { ...user };
       data.avatar = res.data[0].id;
@@ -140,15 +159,17 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
             label={"用户名"}
             name={"userName"}
             rules={[{ required: true, message: "用户名不能为空" }]}
+            initialValue={user.userName}
           >
-            <Input placeholder={"请输入用户名"} autoComplete={"off"} />
+            <Input placeholder={"请输入用户名"} value={user.userName} autoComplete={"new-password"} />
           </Form.Item>
           <Form.Item
             label={"密码"}
             name={"password"}
             rules={[{ required: true, message: "密码不能为空" }]}
+            initialValue={""}
           >
-            <Input.Password placeholder={"请输入密码"} autoComplete={"off"} />
+            <Input.Password placeholder={"请输入密码"} autoComplete={"new-password"} />
           </Form.Item>
           <Form.Item
             label={"性别"}
@@ -161,7 +182,10 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
               <Radio value={1}>女</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label={"角色"} name={"roleList"}>
+          <Form.Item label={"角色"}
+                     name={"roleList"}
+                     initialValue={user.roleList}
+                     rules={[{required:true,message:"角色不能为空"}]}>
             <Select
               placeholder={"请选择用户角色"}
               mode={"multiple"}
@@ -169,6 +193,7 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
               style={{ width: "100%" }}
               onChange={handleRoleChange}
               options={roleList}
+              value={user.roleList}
               fieldNames={{ label: "name", value: "id" }}
             />
           </Form.Item>

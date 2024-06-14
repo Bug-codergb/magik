@@ -2,7 +2,7 @@
 import ProTable from "@/app/components/pro-table/index";
 import CreateUser from "./components/createUser/index";
 import type { TableColumnsType } from "antd";
-import { Button, Space, Tag, Avatar } from "antd";
+import { Button, Space, Tag, Avatar,Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import type { IUser } from "@/app/interface/IUser";
 import { useRef } from "react";
@@ -12,16 +12,19 @@ const Page = () => {
     {
       title: "用户名称",
       dataIndex: "userName",
+      width:150,
     },
     {
       title: "头像",
       dataIndex: "avatarUrl",
+      width:120,
       render: (_, row) => {
         return <Avatar size={64} icon={<UserOutlined />} src={row.avatarUrl} />;
       },
     },
     {
       title: "角色",
+      width:280,
       render: (_, row) => {
         let role = row.role || [];
         return role.map((item, index) => {
@@ -32,18 +35,28 @@ const Page = () => {
           );
         });
       },
+    },{
+      title:"性别",
+      width:80,
+      render:(_,row)=>{
+        return <span>{row.gender===0?"男":"女"}</span>
+      }
     },
     {
       title: "创建时间",
       dataIndex: "createTime",
+      width:140,
     },
     {
       title: "操作",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 200,
       render: (_, record) => (
-        <Space size="middle">
+        <Space size="small">
+          <Button type={"link"} onClick={() => handleEditUser(record)}>
+            查看
+          </Button>
           <Button type={"link"} onClick={() => handleEditUser(record)}>
             编辑
           </Button>
@@ -54,7 +67,9 @@ const Page = () => {
       ),
     },
   ];
-  const handleEditUser = (row: IUser) => {};
+  const handleEditUser = (row: IUser) => {
+    createUserRef.current?.showDrawer(row);
+  };
   const handleDeleteUser = (row: IUser) => {};
 
   const createUserRef = useRef();

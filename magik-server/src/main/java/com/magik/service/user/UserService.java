@@ -21,9 +21,18 @@ public class UserService {
   public int setUserRole(List<UserRole> userRoleList){
     return userMapper.setUserRole(userRoleList);
   }
+  public int deleteUserRole(String userId){
+    return userMapper.deleteUserRole(userId);
+  }
   public Page<User> getUserList(Integer page,Integer limit){
     Page<User> p = PageHelper.startPage(page,limit);
     List<User> userList = userMapper.getUserList(page, limit);
     return p;
+  }
+  public int deleteUser(String id){
+    return userMapper.deleteUser(id);
+  }
+  public int updateUser(UserDTO user){
+    return userMapper.updateUser(user);
   }
 }

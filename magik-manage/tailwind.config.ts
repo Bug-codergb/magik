@@ -15,7 +15,14 @@ const config: Config = {
       },
       width:{
         "500px":"500px",
-        "750px":"750px"
+        "750px":"750px",
+        "450px":"450px",
+      },
+      boxShadow:{
+        "login":"0 2px 10px #0000001a"
+      },
+      translate:{
+        "50":"-50%",
       }
     },
   },

@@ -17,6 +17,9 @@
       (#{item.roleId},#{item.userId})
     </foreach>
   </insert>
+  <delete id="deleteUserRole">
+    delete from user_role where userId=#{userId}
+  </delete>
   <resultMap id="userResultMap" type="User">
     <id property="userId" column="userId"></id>
     <result property="userName" column="userName"></result>
@@ -44,4 +47,10 @@
     left join role as r on r.id = ur.roleId
     where ur.userId=#{userId}
   </select>
+  <delete id="deleteUser">
+    delete from user where userId=#{userId}
+  </delete>
+  <update id="updateUser">
+    update user set userName = #{userName},password=#{password},gender=#{gender},avatar=#{avatar} where userId=#{userId}
+  </update>
 </mapper>

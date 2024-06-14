@@ -71,7 +71,7 @@ const UploadFile: FC<IProps> = forwardRef((props, propsRef): ReactNode => {
       if (cropper) {
         const canvasFile = cropper.getCroppedCanvas({
           imageSmoothingQuality: "high",
-          width: 300,
+          width: 500,
           imageSmoothingEnabled: false,
           fillColor: "#fff",
         });

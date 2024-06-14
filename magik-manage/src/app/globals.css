@@ -63,3 +63,14 @@ body,html {
 .preview-img .small img{
   height: 100%!important;
 }
+.g-footer{
+  text-align: center;
+  padding:12px 18px;
+  color: #919398;
+}
+.g-sider{
+  border-right: 1px solid #e5e7ec;
+}
+.ant-menu-root{
+  border-inline-end: none!important;
+}
