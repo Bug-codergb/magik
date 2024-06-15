@@ -24,6 +24,9 @@ public class UserService {
   public User getUserById(String userId){
     return userMapper.getUserById(userId);
   }
+  public User getUserByName(String name){
+    return userMapper.getUserByName(name);
+  }
   public int deleteUserRole(String userId){
     return userMapper.deleteUserRole(userId);
   }

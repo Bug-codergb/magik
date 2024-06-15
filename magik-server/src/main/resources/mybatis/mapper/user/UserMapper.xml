@@ -9,6 +9,12 @@
     left join file as f on f.id = u.avatar
     where u.userId=#{id}
   </select>
+  <select id="getUserByName" resultType="User" resultMap="userResultMap">
+    select *
+    from user as u
+           left join file as f on f.id = u.avatar
+    where u.userName=#{userName}
+  </select>
   <insert id="createUser">
     insert into user(userId,userName,password,avatar,gender) values (#{userId},#{userName},#{password},#{avatar},#{gender})
   </insert>

@@ -17,7 +17,7 @@ public class LoginController {
   public R<User> login(@RequestBody User user) throws Exception{
     Token token = new Token();
     String tokenStr = token.createJWT(user);
-    User userInfo = userService.getUserById(user.getUserId());
+    User userInfo = userService.getUserByName(user.getUserName());
     userInfo.setPassword("***");
     userInfo.setToken(tokenStr);
     return R.ok(userInfo);

@@ -1,4 +1,6 @@
 import { ConfigProvider } from "antd";
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import  StoreProvider  from "./StoreProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,10 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ConfigProvider locale={zhCN}>{children}</ConfigProvider>
-      </body>
-    </html>
+      <StoreProvider>
+        <html lang="en">
+        <body className={inter.className}>
+        <AntdRegistry>
+          <ConfigProvider locale={zhCN}>{children}</ConfigProvider>
+        </AntdRegistry>
+        </body>
+        </html>
+      </StoreProvider>
   );
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface UserMapper {
   public User getUserById(@Param("id") String id);
+  public User getUserByName(@Param("userName") String userName);
   public int createUser(UserDTO userDTO);
   public int setUserRole(List<UserRole> userRoleList);
   public int deleteUserRole(@Param("userId") String userId);

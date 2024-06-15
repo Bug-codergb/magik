@@ -1,7 +1,10 @@
 "use client";
 import { Button, Checkbox, Form, Input,Col, Row  } from "antd";
 import { LockOutlined, UserOutlined ,CloseCircleOutlined} from "@ant-design/icons";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { changeUserAction } from "@/lib/features/user/userSlice"
 import { useRouter } from 'next/navigation'
+
 type FieldType = {
   username?: string;
   password?: string;
@@ -9,14 +12,22 @@ type FieldType = {
 };
 const Login = () => {
   const router = useRouter()
-  const onFinish = (val:any) => {
-    console.log(val)
+  const dispatch = useAppDispatch();
+  const onFinish = async (val:any) => {
+    let params={
+      userName:val.username as string,
+      password:val.password as string
+    }
+    await dispatch(changeUserAction(params));
     router.push("/home");
   };
   const onFinishFailed = () => {};
   return (
     <div className={"size-full relative"}>
-      <div className={"form-container absolute w-500px p-12 shadow-login left-1/4 top-1/2 translate-y-50 rounded-lg"}>
+      <div className={"form-container absolute w-500px p-12 shadow-login left-2/4 top-1/2 translate-y-50 rounded-lg"}>
+        <div className={"title mb-3.5"}>
+          Magik
+        </div>
         <Form
           name="basic"
           labelCol={{ span: 0 }}
