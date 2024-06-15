@@ -1,9 +1,10 @@
-"use client";
+"use client"
 import { Button, Checkbox, Form, Input,Col, Row  } from "antd";
 import { LockOutlined, UserOutlined ,CloseCircleOutlined} from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { changeUserAction } from "@/lib/features/user/userSlice"
 import { useRouter } from 'next/navigation'
+//import { cookies } from 'next/headers'
 
 type FieldType = {
   username?: string;
@@ -13,6 +14,7 @@ type FieldType = {
 const Login = () => {
   const router = useRouter()
   const dispatch = useAppDispatch();
+  //const cookieStore = cookies()
   const onFinish = async (val:any) => {
     let params={
       userName:val.username as string,

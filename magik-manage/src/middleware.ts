@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import type { NextRequest } from 'next/server'
-const isLogin = true;
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const nextUrl = request.nextUrl.pathname;
+  const auth = cookies().get("authorization");
+  let isLogin = !!auth;
   if(nextUrl === "/login"){
     if(isLogin){
       return NextResponse.redirect(new URL('/home', request.url))
@@ -14,13 +15,12 @@ export function middleware(request: NextRequest) {
     if(!isLogin){
       return NextResponse.redirect(new URL('/login', request.url))
     }else{
-      return NextResponse.rewrite(new URL('/home', request.url))
+      return NextResponse.rewrite(new URL(nextUrl, request.url))
     }
   }
 
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: ['/home/:path*', '/login'],
 }

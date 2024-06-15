@@ -2,7 +2,6 @@ import { createAppSlice } from "@/lib/createAppSlice"
 import type { PayloadAction } from "@reduxjs/toolkit";
 import {IUser} from "@/app/interface/IUser";
 import cache from "@/app/utils/cache";
-
 export interface UserSliceState{
   userMsg:IUser,
   userDetail:any[]
