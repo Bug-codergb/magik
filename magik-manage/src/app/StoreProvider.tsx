@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { Provider } from "react-redux";
 import { makeStore, AppStore } from "@/lib/store";
-import {init} from "@/lib/initSlice";
+import { init } from "@/lib/initSlice";
 export default function StoreProvider({
   children,
 }: {

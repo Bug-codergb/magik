@@ -54,7 +54,6 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
         setRole(res.rows);
       });
   }, []);

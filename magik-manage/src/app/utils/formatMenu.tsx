@@ -1,5 +1,6 @@
 import { IMenu } from "@/app/interface/IMenu";
-import * as iconList from "@ant-design/icons";
+import * as iconList from "@ant-design/icons/lib/icons";
+import Link from 'next/link'
 import type { MenuProps } from "antd";
 type MenuItem = Required<MenuProps>["items"][number];
 export function formatMenu(menu: IMenu[]): MenuItem[] {
@@ -8,11 +9,11 @@ export function formatMenu(menu: IMenu[]): MenuItem[] {
     return ret;
   }
   for (let item of menu) {
-    let Component = iconList[item.icon];
+    let Component = (iconList as Record<string, any>)[item.icon];
     let row: MenuItem = {
       path: item.path,
       key: item.id,
-      label: item.title,
+      label:<Link href={item.path} prefetch={true}>{item.title}</Link>,
       icon: Component ? <Component /> : "",
       children:
         item.children && item.children.length !== 0

@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const nextUrl = request.nextUrl.pathname;
   const auth = cookies().get("authorization");
   let isLogin = !!auth;
-  if(nextUrl === "/login"){
+  if(nextUrl === "/login"){ 
     if(isLogin){
       return NextResponse.redirect(new URL('/home', request.url))
     }else{

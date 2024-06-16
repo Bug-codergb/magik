@@ -70,7 +70,15 @@ const Page = () => {
   const handleEditUser = (row: IUser) => {
     createUserRef.current?.showDrawer(row);
   };
-  const handleDeleteUser = (row: IUser) => {};
+  const handleDeleteUser = async (row: IUser) => {
+    const res= await fetch(`/api/user/delete/${row.userId}`,{
+      method:"post"
+    })
+    const ret = await res.json();
+    if(ret.code === 200){
+      handleRefresh();
+    }
+  };
 
   const createUserRef = useRef();
   const handleCreateUser = () => {

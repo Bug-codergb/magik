@@ -1,8 +1,14 @@
-"use client";
-import { Layout } from "antd";
+import "antd/lib/layout/style/index"
+import "antd/lib/layout/style/light"
+import Layout from "antd/lib/layout/layout";
+import {Header}  from "antd/lib/layout/layout";
+import{Footer}  from "antd/lib/layout/layout";
+import {Content} from "antd/lib/layout/layout"
+
+import Sider  from "antd/lib/layout/Sider";
+
 import moment from 'moment';
 import Nav from "@/app/components/nav";
-const { Header, Footer, Sider, Content } = Layout;
 
 export default function HomeLayout({
   children,
