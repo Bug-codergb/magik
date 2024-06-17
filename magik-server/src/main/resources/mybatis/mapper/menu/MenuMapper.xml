@@ -31,6 +31,7 @@
 
   <resultMap id="childrenMenuResultMap" type="Menu">
     <id property="id" column="id"></id>
+    <result property="parentId" column="parentId"></result>
     <result property="component" column="component"></result>
     <result property="redirect" column="redirect"></result>
     <result property="title" column="title"></result>

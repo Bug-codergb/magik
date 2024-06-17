@@ -23,7 +23,7 @@ export default function HomeLayout({
       <Layout>
         <Header>Header</Header>
         <Content className={"p-4"}>{children}</Content>
-        <Footer className={"g-footer"}>
+        <Footer className={"g-footer py-3"}>
           {moment().format("yyyy")} ©magik By GuoBin.
         </Footer>
       </Layout>

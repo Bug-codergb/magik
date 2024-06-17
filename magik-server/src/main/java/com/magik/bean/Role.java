@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,4 +18,5 @@ public class Role {
   private Date createTime;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   private Date updateTime;
+  private List<String> menuList;
 }

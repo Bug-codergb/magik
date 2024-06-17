@@ -2,6 +2,8 @@ package com.magik.controller.role;
 
 import com.github.pagehelper.Page;
 import com.magik.bean.Role;
+import com.magik.bean.RoleMenu;
+import com.magik.dto.role.RoleDTO;
 import com.magik.mapper.role.RoleMapper;
 import com.magik.result.PageResult;
 import com.magik.result.R;
@@ -9,6 +11,7 @@ import com.magik.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +36,20 @@ public class RoleController {
   @PostMapping("/delete/{id}")
   public R<String> deleteRole(@PathVariable("id") String id){
     roleService.deleteRole(id);
+    return R.ok("");
+  }
+  @PostMapping("/set/menu")
+  public R<String> setRoleMenu(@RequestBody RoleDTO roleDTO){
+    List<RoleMenu> roleMenuList = new ArrayList<>();
+    if(roleDTO.getMenuList().size()!=0){
+      for(String roleStr : roleDTO.getMenuList()){
+        RoleMenu roleMenu = new RoleMenu();
+        roleMenu.setRoleId(roleDTO.getId());
+        roleMenu.setMenuId(roleStr);
+        roleMenuList.add(roleMenu);
+      }
+    }
+    roleService.setRoleMenu(roleMenuList);
     return R.ok("");
   }
 }

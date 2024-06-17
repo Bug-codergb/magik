@@ -6,11 +6,35 @@
   <insert id="createRole">
     insert into role(id,name) values (#{id},#{name});
   </insert>
-  <select id="getAllRole" resultType="Role">
-    select *
-    from role
+  <resultMap id="roleResultMap" type="Role">
+    <id property="id" column="id"></id>
+    <result property="name" column="name"></result>
+    <result property="createTime" column="createTime"></result>
+    <result property="updateTime" column="updateTime"></result>
+    <collection property="menuList"
+                ofType="java.util.List"
+                select="com.magik.mapper.role.RoleMapper.getRoleMenu"
+                column="{roleId=id}"></collection>
+  </resultMap>
+  <select id="getAllRole" resultMap="roleResultMap">
+    select r.id,r.name,r.createTime,r.updateTime
+    from role as r
+    left join role_menu as rm on rm.roleId = r.id
+    group by r.id
+    order by r.createTime desc
   </select>
   <delete id="deleteRole">
     delete from role where id=#{id}
   </delete>
+  <insert id="setRoleMenu">
+    insert into role_menu(roleId,menuId) values
+    <foreach collection="list" separator="," item="item">
+      (#{item.roleId},#{item.menuId})
+    </foreach>
+  </insert>
+  <select id="getRoleMenu" resultType="string">
+    select menuId
+    from role_menu
+    where roleId=#{roleId}
+  </select>
 </mapper>

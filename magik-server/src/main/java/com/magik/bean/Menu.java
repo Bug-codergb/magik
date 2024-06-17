@@ -14,6 +14,7 @@ import java.util.List;
 public class Menu {
   private String id;
   private Menu parent;
+  private String parentId;
   private List<Menu> children;
   private String title;
   private String path;
