@@ -58,7 +58,7 @@ const Role = () => {
         }
       />
       <CreateRole ref={createRoleRef} success={search}/>
-      <MenuPermission ref={menuPermissionRef}/>
+      <MenuPermission ref={menuPermissionRef} success={search}/>
     </div>
   );
 };

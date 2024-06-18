@@ -41,6 +41,7 @@ public class RoleController {
   @PostMapping("/set/menu")
   public R<String> setRoleMenu(@RequestBody RoleDTO roleDTO){
     List<RoleMenu> roleMenuList = new ArrayList<>();
+    roleService.deleteRoleMenu(roleDTO.getId());
     if(roleDTO.getMenuList().size()!=0){
       for(String roleStr : roleDTO.getMenuList()){
         RoleMenu roleMenu = new RoleMenu();
@@ -50,6 +51,11 @@ public class RoleController {
       }
     }
     roleService.setRoleMenu(roleMenuList);
+    return R.ok("");
+  }
+  @PostMapping("/delete/menu/{roleId}")
+  public R<String> deleteRoleMenu(@PathVariable("roleId") String roleId){
+    roleService.deleteRoleMenu(roleId);
     return R.ok("");
   }
 }

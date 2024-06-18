@@ -37,4 +37,7 @@
     from role_menu
     where roleId=#{roleId}
   </select>
+  <delete id="deleteRoleMenu">
+    delete from role_menu where roleId=#{roleId}
+  </delete>
 </mapper>

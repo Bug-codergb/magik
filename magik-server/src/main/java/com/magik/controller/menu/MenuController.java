@@ -35,4 +35,9 @@ public class MenuController {
     menuService.deleteMenuById(id);
     return R.ok("");
   }
+  @PostMapping("/list/user/{userId}")
+  public R<List<Menu>> getUserMenu(@PathVariable("userId") String userId){
+    List<Menu> menuList = menuService.getUserMenu(userId);
+    return R.ok(menuList);
+  }
 }

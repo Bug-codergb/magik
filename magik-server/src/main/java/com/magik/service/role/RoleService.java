@@ -28,4 +28,7 @@ public class RoleService {
   public int setRoleMenu(List<RoleMenu> roleMenuList){
     return roleMapper.setRoleMenu(roleMenuList);
   }
+  public int deleteRoleMenu(String roleId){
+    return roleMapper.deleteRoleMenu(roleId);
+  }
 }

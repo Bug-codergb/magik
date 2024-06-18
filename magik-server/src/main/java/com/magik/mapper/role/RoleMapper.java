@@ -12,4 +12,5 @@ public interface RoleMapper {
   public int deleteRole(@Param("id") String id);
   public int setRoleMenu(List<RoleMenu> roleMenuList);
   public List<String> getRoleMenu(@Param("roleId") String roleId);
+  public int deleteRoleMenu(@Param("roleId") String roleId);
 }

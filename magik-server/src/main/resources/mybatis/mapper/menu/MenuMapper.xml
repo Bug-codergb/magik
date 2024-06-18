@@ -54,4 +54,16 @@
   <delete id="deleteMenuById">
     delete from menu where id=#{id}
   </delete>
+
+  <select id="getUserMenu" resultMap="menuResultMap">
+    select ANY_VALUE(m.parentId) as parentId,any_value(m.id) id,ANY_VALUE(m.title) AS title
+    from user as u
+           left join user_role ur on u.userId = ur.userId
+           left join role_menu as rm on ur.roleId = rm.roleId
+           left join menu m on m.id = rm.menuId
+           left join role on role.id = rm.roleId
+    where u.userId = #{userId}
+    group by m.id
+    order by m.sort asc
+  </select>
 </mapper>

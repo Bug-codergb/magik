@@ -1,11 +1,14 @@
-import {useState, useImperativeHandle, forwardRef, useEffect} from "react";
+import {useState, useImperativeHandle, forwardRef, useEffect,FC} from "react";
 import type { TreeDataNode, TreeProps } from 'antd';
 import { Tree } from 'antd';
 
 import ProDrawer from "@/app/components/pro-drawer";
 import {IRole} from "@/app/interface/IRole";
-
-const MenuPermission = forwardRef(function MenuPermission(props, ref){
+interface IProps{
+  success:()=>void
+}
+const MenuPermission:FC<IProps> = forwardRef(function MenuPermission(props, ref){
+  const { success } =props;
   const [title,setTitle] = useState<string>("编辑菜单权限");
   const [open,setOpen] = useState<boolean>(false);
 
@@ -20,33 +23,56 @@ const MenuPermission = forwardRef(function MenuPermission(props, ref){
     const ret = await res.json();
     setTreeData(ret.rows);
   }
+  const [menuList,setMenuList] = useState<string[]>([]);
   const showDrawer=async (row:IRole)=>{
     setOpen(true);
     await getTreeData();
     setRole(row);
+    setMenuList(row.menuList);
   }
   const handleClose=()=>{
     setRole(null);
     setOpen(false);
   }
-  const handleConfirm=()=>{
-    setOpen(false)
+  const handleCheck=(checkedKeys:string[])=>{
+    setMenuList(checkedKeys);
+  }
+  const handleConfirm = async ()=>{
+    if(menuList.length!==0){
+      let data={
+        id:role?.id,
+        menuList:menuList
+      }
+      const res = await fetch("/api/role/set/menu",{
+        method:"post",
+        body:JSON.stringify(data),
+        headers:{
+          "Content-type":"application/json;charset=UTF-8"
+        }
+      })
+      const ret = await res.json();
+      if(ret.code === 200){
+        setOpen(false)
+        success();
+      }
+    }
+
   }
   useImperativeHandle(ref,()=>{
     return {
       showDrawer
     }
   })
-  return <ProDrawer width={600} title={title} onClose={handleClose} onConfirm={handleConfirm} open={open}>
+  return <ProDrawer width={500} title={title} onClose={handleClose} onConfirm={handleConfirm} open={open}>
     {
       treeData && treeData.length!==0 && <Tree
           checkable
           autoExpandParent={true}
           defaultExpandAll={true}
           selectedKeys={role?role.menuList :[]}
-          checkedKeys={role?role.menuList :[]}
+          checkedKeys={menuList}
           onSelect={()=>{}}
-          onCheck={()=>{}}
+          onCheck={handleCheck}
           treeData={treeData}
           fieldNames={{title:'title',key:'id'}}
       />
