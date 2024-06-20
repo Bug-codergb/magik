@@ -12,4 +12,5 @@ public interface MenuMapper {
   public List<Menu> getChildrenMenu(@Param("parentId") String parentId);
   public int deleteMenuById(@Param("id") String id);
   public List<Menu> getUserMenu(@Param("userId") String userId);
+  public List<Menu> getRoleMenuChild(@Param("parentId") String parentId);
 }

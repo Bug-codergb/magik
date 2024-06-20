@@ -27,13 +27,13 @@
     delete from role where id=#{id}
   </delete>
   <insert id="setRoleMenu">
-    insert into role_menu(roleId,menuId) values
+    insert into role_menu(roleId,menuId,half) values
     <foreach collection="list" separator="," item="item">
-      (#{item.roleId},#{item.menuId})
+      (#{item.roleId},#{item.menuId},#{item.half})
     </foreach>
   </insert>
-  <select id="getRoleMenu" resultType="string">
-    select menuId
+  <select id="getRoleMenu" resultType="RoleMenu">
+    select menuId,half
     from role_menu
     where roleId=#{roleId}
   </select>

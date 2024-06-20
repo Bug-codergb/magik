@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class RoleMenu {
   private String roleId;
   private String menuId;
+  private Integer half;
 }

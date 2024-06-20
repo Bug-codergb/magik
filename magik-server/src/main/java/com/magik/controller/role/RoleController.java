@@ -43,10 +43,11 @@ public class RoleController {
     List<RoleMenu> roleMenuList = new ArrayList<>();
     roleService.deleteRoleMenu(roleDTO.getId());
     if(roleDTO.getMenuList().size()!=0){
-      for(String roleStr : roleDTO.getMenuList()){
+      for(RoleMenu roleItem : roleDTO.getMenuList()){
         RoleMenu roleMenu = new RoleMenu();
         roleMenu.setRoleId(roleDTO.getId());
-        roleMenu.setMenuId(roleStr);
+        roleMenu.setMenuId(roleItem.getMenuId());
+        roleMenu.setHalf(roleItem.getHalf());
         roleMenuList.add(roleMenu);
       }
     }

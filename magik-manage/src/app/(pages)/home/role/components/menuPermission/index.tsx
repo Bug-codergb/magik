@@ -7,6 +7,10 @@ import {IRole} from "@/app/interface/IRole";
 interface IProps{
   success:()=>void
 }
+interface IRawMenu{
+  menuId:string;
+  half:number
+}
 const MenuPermission:FC<IProps> = forwardRef(function MenuPermission(props, ref){
   const { success } =props;
   const [title,setTitle] = useState<string>("编辑菜单权限");
@@ -24,24 +28,45 @@ const MenuPermission:FC<IProps> = forwardRef(function MenuPermission(props, ref)
     setTreeData(ret.rows);
   }
   const [menuList,setMenuList] = useState<string[]>([]);
+  const [rawMenuList,setRawMenuList] = useState<IRawMenu[]>([]);
   const showDrawer=async (row:IRole)=>{
     setOpen(true);
     await getTreeData();
     setRole(row);
-    setMenuList(row.menuList);
+    if(row.menuList){
+      let menuList:string[] = row.menuList.filter((item)=>`${item.half}`!=='1').map((item)=>item.menuId);
+      setMenuList(menuList);
+      setRawMenuList(row.menuList);
+    }
+
   }
   const handleClose=()=>{
     setRole(null);
     setOpen(false);
   }
-  const handleCheck=(checkedKeys:string[])=>{
+  const handleCheck=(checkedKeys:string[],e:any)=>{
+    console.log(e);
+    const list:IRawMenu[]=[];
+    for(let item of e.checkedNodes){
+      list.push({
+        menuId:item.id,
+        half:0
+      })
+    }
+    for(let item of e.halfCheckedKeys){
+      list.push({
+        menuId:item,
+        half:1
+      })
+    }
+    setRawMenuList(list);
     setMenuList(checkedKeys);
   }
   const handleConfirm = async ()=>{
     if(menuList.length!==0){
       let data={
         id:role?.id,
-        menuList:menuList
+        menuList:rawMenuList
       }
       const res = await fetch("/api/role/set/menu",{
         method:"post",
@@ -67,6 +92,7 @@ const MenuPermission:FC<IProps> = forwardRef(function MenuPermission(props, ref)
     {
       treeData && treeData.length!==0 && <Tree
           checkable
+          checkStrictly={false}
           autoExpandParent={true}
           defaultExpandAll={true}
           selectedKeys={role?role.menuList :[]}

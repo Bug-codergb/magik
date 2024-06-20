@@ -55,15 +55,47 @@
     delete from menu where id=#{id}
   </delete>
 
-  <select id="getUserMenu" resultMap="menuResultMap">
-    select ANY_VALUE(m.parentId) as parentId,any_value(m.id) id,ANY_VALUE(m.title) AS title
+  <resultMap id="roleMenuResultMap" type="Menu">
+    <id property="id" column="id"></id>
+    <result property="component" column="component"></result>
+    <result property="parentId" column="parentId"></result>
+    <result property="redirect" column="redirect"></result>
+    <result property="title" column="title"></result>
+    <result property="createTime" column="createTime"></result>
+    <result property="updateTime" column="updateTime"></result>
+    <result property="icon" column="icon"></result>
+    <result property="meta" column="meta"></result>
+    <result property="path" column="path"></result>
+    <collection property="children"
+                ofType="Menu"
+                select="com.magik.mapper.menu.MenuMapper.getRoleMenuChild"
+                column="{parentId=id}"></collection>
+  </resultMap>
+  <select id="getUserMenu" resultMap="roleMenuResultMap">
+    select * from menu
+    where parentId= "-1" and id!="-1" and id in(
+    select distinct(ANY_VALUE(m.id)) as id
     from user as u
-           left join user_role ur on u.userId = ur.userId
-           left join role_menu as rm on ur.roleId = rm.roleId
-           left join menu m on m.id = rm.menuId
-           left join role on role.id = rm.roleId
-    where u.userId = #{userId}
-    group by m.id
-    order by m.sort asc
+    left join user_role ur on u.userId = ur.userId
+    left join role_menu as rm on ur.roleId = rm.roleId
+    left join menu m on m.id = rm.menuId
+    left join role on role.id = rm.roleId
+    where u.userId = 110 and m.id is not null
+    )
+    order by sort asc
+  </select>
+  <select id="getRoleMenuChild" resultMap="roleMenuResultMap">
+    select *
+    from menu
+    where parentId=#{parentId} and id in(
+      select distinct(ANY_VALUE(m.id)) as id
+      from user as u
+             left join user_role ur on u.userId = ur.userId
+             left join role_menu as rm on ur.roleId = rm.roleId
+             left join menu m on m.id = rm.menuId
+             left join role on role.id = rm.roleId
+      where u.userId = 110 and m.id is not null
+      )
+    order by `sort` asc
   </select>
 </mapper>
