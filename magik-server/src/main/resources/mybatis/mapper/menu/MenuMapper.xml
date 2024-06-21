@@ -69,10 +69,11 @@
     <collection property="children"
                 ofType="Menu"
                 select="com.magik.mapper.menu.MenuMapper.getRoleMenuChild"
-                column="{parentId=id}"></collection>
+                column="{parentId=id,userId=userId}"></collection>
   </resultMap>
   <select id="getUserMenu" resultMap="roleMenuResultMap">
-    select * from menu
+    select *,'${userId}' as userId
+    from menu
     where parentId= "-1" and id!="-1" and id in(
     select distinct(ANY_VALUE(m.id)) as id
     from user as u
@@ -80,12 +81,12 @@
     left join role_menu as rm on ur.roleId = rm.roleId
     left join menu m on m.id = rm.menuId
     left join role on role.id = rm.roleId
-    where u.userId = 110 and m.id is not null
+    where u.userId = #{userId} and m.id is not null
     )
     order by sort asc
   </select>
   <select id="getRoleMenuChild" resultMap="roleMenuResultMap">
-    select *
+    select *,'${userId}' as userId
     from menu
     where parentId=#{parentId} and id in(
       select distinct(ANY_VALUE(m.id)) as id
@@ -94,7 +95,7 @@
              left join role_menu as rm on ur.roleId = rm.roleId
              left join menu m on m.id = rm.menuId
              left join role on role.id = rm.roleId
-      where u.userId = 110 and m.id is not null
+      where u.userId = #{userId} and m.id is not null
       )
     order by `sort` asc
   </select>

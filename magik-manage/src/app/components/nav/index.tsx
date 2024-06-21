@@ -6,12 +6,14 @@ import { formatMenu } from "@/app/utils/formatMenu";
 type MenuItem = Required<MenuProps>["items"][number];
 
 async function getData(){
-  const res = await fetch("http://localhost:3000/api/menu/list?page=1&limit=1000", {
+  const res = await fetch("http://localhost:3000/api/menu/list/user/110", {
     method: "post",
-    cache:'force-cache'
+    next:{
+      revalidate:3
+    }
   });
   const ret = await res.json();
-  return ret.rows;
+  return ret.data;
 }
 
 export default async  function() {

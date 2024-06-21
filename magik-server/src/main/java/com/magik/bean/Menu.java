@@ -27,4 +27,5 @@ public class Menu {
   private Date createTime;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   private Date updateTime;
+  private String userId;
 }
