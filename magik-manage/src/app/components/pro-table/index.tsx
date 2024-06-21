@@ -6,7 +6,7 @@ import {
   useState,
   useImperativeHandle,
 } from "react";
-import { Table, Space, Button, Flex, Pagination } from "antd";
+import { Table, Space, Button, Flex, Pagination,Spin } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
 import { AnyObject } from "antd/es/_util/type";
@@ -37,6 +37,7 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
   } = props;
   const [tableData, setTableData] = useState<T[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [isLoading,setLoading] = useState<boolean>(true);
   const getTableData = (page: number = 1, limit: number = 10) => {
     fetch(`${url}?page=${page}&limit=${limit}`, {
       method: method ?? "post",
@@ -48,11 +49,13 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
         if (res.code === 200) {
           pagination ? setTableData(res.rows) : setTableData(res.data);
           pagination ? setTotal(res.total) : "";
+          setLoading(false)
         }
       });
   };
 
   useEffect(() => {
+    setLoading(true)
     getTableData();
   }, [url]);
 
@@ -82,6 +85,7 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
         <Table
           rowKey={rowKey}
           sticky={true}
+          loading={isLoading ? { indicator: <div><Spin /></div>}:false}
           size={"middle"}
           columns={columns}
           dataSource={tableData}
