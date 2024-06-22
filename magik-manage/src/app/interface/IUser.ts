@@ -1,4 +1,5 @@
 import {IRole} from "@/app/interface/IRole";
+import {IMenu} from "@/app/interface/IMenu";
 
 export interface IUser{
   userId:string;
@@ -11,5 +12,6 @@ export interface IUser{
   updateTime:string;
   gender:number;
   role:IRole[]
-  roleList:string[]
+  roleList:string[],
+  menu:IMenu
 }

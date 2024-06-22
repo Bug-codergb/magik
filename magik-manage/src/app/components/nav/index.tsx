@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import type { MenuProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
 import { formatMenu } from "@/app/utils/formatMenu";
+import getFirstMenu from "@/app/utils/getFirstMenu"
 type MenuItem = Required<MenuProps>["items"][number];
 
 async function getData(){
@@ -15,34 +16,18 @@ async function getData(){
   const ret = await res.json();
   return ret.data;
 }
-
 export default async  function() {
-  let rawNav:any[]=[];
-  let menu = await getData()
-  rawNav = formatMenu(menu);
-  //const [nav, setNav] = useState<IMenu[]>([]);
-  //const router = useRouter()
-
-  //const [rawNav, setRawNav] = useState<MenuItem[]>([]);
-  // useEffect(() => {
-  //   if (nav && nav.length !== 0) {
-  //     const ret = formatMenu(nav);
-  //     setRawNav(ret);
-  //   }
-  // }, [nav]);
-  const onClick = (e:any) => {
-    const path:string = e.item.props.path;
-    console.log(path);
-  };
-
+  let menu:IMenu[] = await getData()
+  const rawNav = formatMenu(menu);
+  const firstMenu =getFirstMenu(menu[0]);
   return (
     <div className={"size-full text-slate-950 flex flex-col"}>
       <div className={"h-16 text-slate-950"}></div>
       <Menu
         //onClick={onClick}
         style={{ width: "100%" }}
-        defaultSelectedKeys={["1717422759317"]}
-        defaultOpenKeys={["1717421156223"]}
+        defaultSelectedKeys={[firstMenu ? firstMenu.id:""]}
+        defaultOpenKeys={[firstMenu ? firstMenu.id:""]}
         mode="inline"
         items={rawNav}
         className={"flex-1 overflow-y-auto"}

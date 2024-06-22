@@ -5,8 +5,8 @@ import {changeUserMsg} from "@/lib/features/user/userSlice";
 import {IUser} from "@/app/interface/IUser";
 
 function initUserSlice(store:EnhancedStore){
-  const user = cache.getCache("user") as IUser;
-  user && store.dispatch(changeUserMsg(user));
+  //const user = cache.getCache("user") as IUser;
+  //user && store.dispatch(changeUserMsg(user));
 }
 function init(store:EnhancedStore){
   initUserSlice(store);

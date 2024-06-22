@@ -13,7 +13,7 @@ export function formatMenu(menu: IMenu[]): MenuItem[] {
     let row: MenuItem = {
       path: item.path,
       key: item.id,
-      label:<Link href={item.path} prefetch={true}>{item.title}</Link>,
+      label:item.children && item.children.length!==0? item.title : <Link href={item.path} prefetch={true}>{item.title}</Link>,
       icon: Component ? <Component /> : "",
       children:
         item.children && item.children.length !== 0

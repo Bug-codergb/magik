@@ -7,6 +7,7 @@ import Sider  from "antd/lib/layout/Sider";
 
 import moment from 'moment';
 import Nav from "@/app/components/nav";
+import TopBar from "@/app/components/topBar/TopBar";
 export default function HomeLayout({
   children,
 }: Readonly<{
@@ -18,7 +19,9 @@ export default function HomeLayout({
         <Nav />
       </Sider>
       <Layout hasSider={false}>
-        <Header>Header</Header>
+        <Header>
+          <TopBar/>
+        </Header>
         <Content className={"p-4"}>{children}</Content>
         <Footer className={"g-footer py-3"}>
           {moment().format("yyyy")} ©magik By GuoBin.

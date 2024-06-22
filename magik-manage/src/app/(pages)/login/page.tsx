@@ -1,9 +1,10 @@
 "use client"
-import { Button, Checkbox, Form, Input,Col, Row  } from "antd";
+import { Button, Checkbox, Form, Input,Col, Row,notification  } from "antd";
 import { LockOutlined, UserOutlined ,CloseCircleOutlined} from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { changeUserAction } from "@/lib/features/user/userSlice"
+import { changeUserAction ,selectUserMsg} from "@/lib/features/user/userSlice"
 import { useRouter } from 'next/navigation'
+import {IMenu} from "@/app/interface/IMenu";
 //import { cookies } from 'next/headers'
 
 type FieldType = {
@@ -15,17 +16,22 @@ const Login = () => {
   const router = useRouter()
   const dispatch = useAppDispatch();
   //const cookieStore = cookies()
+  const [api, contextHolder] = notification.useNotification();
+  const userMsg = useAppSelector(selectUserMsg);
   const onFinish = async (val:any) => {
     let params={
       userName:val.username as string,
       password:val.password as string
     }
-    await dispatch(changeUserAction(params));
-    router.push("/home");
+     const ret = await dispatch(changeUserAction(params));
+     if(ret.payload){
+       router.push(ret.payload.menu.path);
+     }
   };
   const onFinishFailed = () => {};
   return (
     <div className={"size-full relative"}>
+      {contextHolder}
       <div className={"form-container absolute w-500px p-12 shadow-login left-2/4 top-1/2 translate-y-50 rounded-lg"}>
         <div className={"title mb-3.5"}>
           Magik

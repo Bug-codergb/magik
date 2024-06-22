@@ -1,3 +1,5 @@
+import {useRouter} from "next/navigation";
+import { notification } from 'antd';
 import { createAppSlice } from "@/lib/createAppSlice"
 import type { PayloadAction } from "@reduxjs/toolkit";
 import {IUser} from "@/app/interface/IUser";
@@ -45,7 +47,12 @@ export const userSlice = createAppSlice({
       const ret = await res.json();
       if(ret.code === 200){
         return ret.data
-      }else{
+      }else if(ret.code === 403){
+        notification.warning({
+          message: ret.message,
+          description:'您没有任何菜单权限，请联系管理员',
+          placement:"bottomLeft"
+        })
         return {};
       }
     },{
@@ -53,6 +60,7 @@ export const userSlice = createAppSlice({
       fulfilled:(state, action)=>{
         state.userMsg = action.payload;
         cache.setCache("user",state.userMsg);
+        return state;
       },
       rejected:()=>{}
     })
