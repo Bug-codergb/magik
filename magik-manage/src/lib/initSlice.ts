@@ -9,6 +9,6 @@ function initUserSlice(store:EnhancedStore){
   //user && store.dispatch(changeUserMsg(user));
 }
 function init(store:EnhancedStore){
-  initUserSlice(store);
+  //initUserSlice(store);
 }
 export { init};

@@ -1,34 +1,50 @@
+"use client"
 import React,{FC} from "react";
+import {useRouter} from "next/navigation";
 import { Button, Dropdown, Avatar,Space,Flex } from 'antd';
 import { UserOutlined,BellOutlined,SkinOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-          个人信息
-        </a>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          更换密码
-        </a>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-          退出登录
-        </a>
-    ),
-  },
-];
+
 const TopBar:FC=()=>{
+  const router = useRouter();
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+            个人信息
+          </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+          <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+            更换密码
+          </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+          <div onClick={()=>handleLogout()}>
+            退出登录
+          </div>
+      ),
+    },
+  ];
+  const handleLogout=()=>{
+    fetch("/api/logout",{
+      method:"post",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    }).then((res)=>{
+      res.json()
+    }).then(()=>{
+      router.push("/login")
+    })
+  }
   return <div className={"flex justify-between"}>
     <div></div>
     <div>

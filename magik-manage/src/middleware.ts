@@ -18,7 +18,6 @@ export function middleware(request: NextRequest) {
       return NextResponse.rewrite(new URL(nextUrl, request.url))
     }
   }
-
 }
 
 export const config = {

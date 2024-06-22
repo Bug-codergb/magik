@@ -20,7 +20,8 @@ const initialState: UserSliceState = {
     createTime:"",
     updateTime:"",
     role:[],
-    roleList:[]
+    roleList:[],
+    menu:{}
   },
   userDetail:[]
 };
