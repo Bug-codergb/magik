@@ -1,10 +1,10 @@
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import  StoreProvider  from "./StoreProvider";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import StoreProvider from "./StoreProvider";
 import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "./cropper.css"
+import "./cropper.css";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -18,16 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <StoreProvider>
-        <html lang="en">
+    <StoreProvider>
+      <html lang="en">
         <body className={inter.className}>
-        <AntdRegistry>
-          <ConfigProvider>
-            {children}
-          </ConfigProvider>
-        </AntdRegistry>
+          <AntdRegistry>
+            <ConfigProvider>{children}</ConfigProvider>
+          </AntdRegistry>
         </body>
-        </html>
-      </StoreProvider>
+      </html>
+    </StoreProvider>
   );
 }

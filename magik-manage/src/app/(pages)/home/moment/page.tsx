@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import ProTable from "@/app/components/pro-table/index";
 import { Button, Space, TableColumnsType, Pagination } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
-import {IMoment} from "@/app/interface/IMoment";
+import { IMoment } from "@/app/interface/IMoment";
 const Moment = () => {
   const columns: TableColumnsType<IMoment> = [
     {
@@ -22,9 +22,9 @@ const Moment = () => {
       title: "用户",
       key: "sort",
       width: 100,
-      render:(_,row:IMoment)=>{
-        return <span>{row.user.userName}</span>
-      }
+      render: (_, row: IMoment) => {
+        return <span>{row.user.userName}</span>;
+      },
     },
     {
       title: "媒体文件",

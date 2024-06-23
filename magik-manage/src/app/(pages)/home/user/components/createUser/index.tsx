@@ -11,23 +11,23 @@ import {
 import type { RadioChangeEvent } from "antd";
 import ProDrawer from "@/app/components/pro-drawer";
 import UploadFile from "@/app/components/upload-file";
-import { Form, Input, Radio, Select,message } from "antd";
+import { Form, Input, Radio, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { IRole } from "@/app/interface/IRole";
-import {IUser} from "@/app/interface/IUser";
-import {request} from "@/app/utils/request";
+import { IUser } from "@/app/interface/IUser";
+import { request } from "@/app/utils/request";
 
 interface IProps {
   success?: () => void;
 }
-interface IFormData{
-  userId:string;
+interface IFormData {
+  userId: string;
   userName: string;
   password: string;
   gender: number;
   avatar: string;
-  avatarUrl:string;
-  roleList:string[]
+  avatarUrl: string;
+  roleList: string[];
 }
 const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   const { success } = props;
@@ -36,27 +36,27 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   const [open, setOpen] = useState(false);
 
   const [user, setUser] = useState<IFormData>({
-    userId:"",
+    userId: "",
     userName: "",
     password: "",
     gender: 1,
     avatar: "",
-    roleList:[],
-    avatarUrl:''
+    roleList: [],
+    avatarUrl: "",
   });
   const [formRef] = Form.useForm();
 
   const [roleList, setRole] = useState<IRole[]>([]);
   useEffect(() => {
     request({
-      url:"/api/role/all",
-      params:{
-        page:1,
-        limit:10000
-      }
-    }).then((res)=>{
+      url: "/api/role/all",
+      params: {
+        page: 1,
+        limit: 10000,
+      },
+    }).then((res) => {
       setRole(res.rows);
-    })
+    });
   }, []);
   const onClose = () => {
     setOpen(false);
@@ -66,18 +66,18 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
   };
 
   const isUpdate = useRef<boolean>(false);
-  const showDrawer = (val?:IUser) => {
+  const showDrawer = (val?: IUser) => {
     setOpen(true);
     formRef.resetFields();
     setShowAvatar(false);
     isUpdate.current = Boolean(val);
-    isUpdate.current ? setTitle("更新用户"):setTitle("新增用户");
-    if(isUpdate.current){
-      val!.roleList = val!.role.map((item)=>item.id)
-      setUser({...val!});
+    isUpdate.current ? setTitle("更新用户") : setTitle("新增用户");
+    if (isUpdate.current) {
+      val!.roleList = val!.role.map((item) => item.id);
+      setUser({ ...val! });
       setShowAvatar(true);
-      setAvatarUrl(val!.avatar ? val!.avatarUrl:"");
-      formRef.setFieldsValue({...val!});
+      setAvatarUrl(val!.avatar ? val!.avatarUrl : "");
+      formRef.setFieldsValue({ ...val! });
     }
   };
   useImperativeHandle(propsRef, () => {
@@ -96,12 +96,14 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
       ...val,
     };
     request({
-      url:isUpdate.current ? `/api/user/update/${user.userId}`:"/api/user/create",
-      body:params,
+      url: isUpdate.current
+        ? `/api/user/update/${user.userId}`
+        : "/api/user/create",
+      body: params,
     }).then(() => {
       setOpen(false);
       success && success();
-      message.success(isUpdate.current ?"更新成功":"创建成功");
+      message.success(isUpdate.current ? "更新成功" : "创建成功");
     });
   };
 
@@ -154,7 +156,11 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
             rules={[{ required: true, message: "用户名不能为空" }]}
             initialValue={user.userName}
           >
-            <Input placeholder={"请输入用户名"} value={user.userName} autoComplete={"new-password"} />
+            <Input
+              placeholder={"请输入用户名"}
+              value={user.userName}
+              autoComplete={"new-password"}
+            />
           </Form.Item>
           <Form.Item
             label={"密码"}
@@ -162,7 +168,10 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
             rules={[{ required: true, message: "密码不能为空" }]}
             initialValue={""}
           >
-            <Input.Password placeholder={"请输入密码"} autoComplete={"new-password"} />
+            <Input.Password
+              placeholder={"请输入密码"}
+              autoComplete={"new-password"}
+            />
           </Form.Item>
           <Form.Item
             label={"性别"}
@@ -175,10 +184,12 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
               <Radio value={1}>女</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label={"角色"}
-                     name={"roleList"}
-                     initialValue={user.roleList}
-                     rules={[{required:true,message:"角色不能为空"}]}>
+          <Form.Item
+            label={"角色"}
+            name={"roleList"}
+            initialValue={user.roleList}
+            rules={[{ required: true, message: "角色不能为空" }]}
+          >
             <Select
               placeholder={"请选择用户角色"}
               mode={"multiple"}

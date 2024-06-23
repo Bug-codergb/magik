@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import {Table, Space, Button, Flex, message} from "antd";
+import { Table, Space, Button, Flex, message } from "antd";
 import ProTable from "@/app/components/pro-table";
 import type { TableColumnsType, TableProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
@@ -22,10 +22,10 @@ const Menu = (): React.ReactNode => {
       width: 200,
     },
     {
-      title:"排序",
-      dataIndex:"sort",
-      key:"sort",
-      width:100
+      title: "排序",
+      dataIndex: "sort",
+      key: "sort",
+      width: 100,
     },
     {
       title: "重定向",
@@ -93,26 +93,28 @@ const Menu = (): React.ReactNode => {
     const res = await ret.json();
     if (res.code === 200) {
       tableRef.current?.search();
-      message.success("删除成功")
+      message.success("删除成功");
     }
   };
   const tableRef = useRef();
-  const handleSuccess = ():void => {
+  const handleSuccess = (): void => {
     tableRef.current?.search();
   };
   return (
     <div className={"card table-box"}>
-      <ProTable<IMenu> url={'/api/menu/list'}
-                       columns={columns}
-                       tableData={[]}
-                       params={{}}
-                       pagination={true}
-                       ref={tableRef}
-                       tableToolButton={
-                         <Button type={"primary"} onClick={() => handleCreateMenu()}>
-                           新增菜单
-                         </Button>
-                       } />
+      <ProTable<IMenu>
+        url={"/api/menu/list"}
+        columns={columns}
+        tableData={[]}
+        params={{}}
+        pagination={true}
+        ref={tableRef}
+        tableToolButton={
+          <Button type={"primary"} onClick={() => handleCreateMenu()}>
+            新增菜单
+          </Button>
+        }
+      />
       <CreateMenu ref={createMenuRef} finish={() => handleSuccess()} />
     </div>
   );
