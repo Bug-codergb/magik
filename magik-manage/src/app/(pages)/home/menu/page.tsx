@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { Table, Space, Button, Flex } from "antd";
+import {Table, Space, Button, Flex, message} from "antd";
 import ProTable from "@/app/components/pro-table";
 import type { TableColumnsType, TableProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
@@ -92,11 +92,13 @@ const Menu = (): React.ReactNode => {
     const ret = await fetch(`/api/menu/delete/${item.id}`, { method: "post" });
     const res = await ret.json();
     if (res.code === 200) {
-
+      tableRef.current?.search();
+      message.success("删除成功")
     }
   };
+  const tableRef = useRef();
   const handleSuccess = ():void => {
-
+    tableRef.current?.search();
   };
   return (
     <div className={"card table-box"}>
@@ -105,6 +107,7 @@ const Menu = (): React.ReactNode => {
                        tableData={[]}
                        params={{}}
                        pagination={true}
+                       ref={tableRef}
                        tableToolButton={
                          <Button type={"primary"} onClick={() => handleCreateMenu()}>
                            新增菜单

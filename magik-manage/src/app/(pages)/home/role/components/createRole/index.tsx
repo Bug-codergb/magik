@@ -1,6 +1,7 @@
 import ProDrawer from "@/app/components/pro-drawer";
 import {useState,useImperativeHandle,forwardRef,FC} from "react";
-import { Form ,Input} from "antd";
+import {Form, Input, message} from "antd";
+import {request} from "@/app/utils/request";
 interface IProps{
   success:()=>void
 }
@@ -19,20 +20,18 @@ const CreateRole:FC<IProps> = forwardRef(function(props, ref){
 
   }
   const handleFinish=async (val:any)=>{
-    console.log(val)
-    const res = await fetch("/api/role/create",{
-      body:JSON.stringify({name:val.name}),
-      method:"post",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-      },
+    request({
+      url:"/api/role/create",
+      body:{
+        name:val.name
+      }
+    }).then((res)=>{
+      if(res.code === 200){
+        setOpen(false);
+        success();
+        message.success("创建成功");
+      }
     })
-    const ret = await res.json();
-    if(ret.code === 200){
-      setOpen(false);
-      success();
-    }
-
   }
   const showDrawer=()=>{
     setOpen(true)

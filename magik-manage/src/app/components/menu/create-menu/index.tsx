@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   useMemo,
 } from "react";
-import { Modal, Form, Input, Select, Flex, InputNumber } from "antd";
+import {Modal, Form, Input, Select, Flex, InputNumber, message} from "antd";
 import * as iconList from "@ant-design/icons";
 import { IMenu } from "@/app/interface/IMenu";
 
@@ -82,6 +82,7 @@ const CreateMenu: FC<IProps> = forwardRef((props, ref): React.ReactNode => {
     if (res.code === 200) {
       propsFinish();
       setIsShow(false);
+      message.success("创建成功")
     }
   };
   return (

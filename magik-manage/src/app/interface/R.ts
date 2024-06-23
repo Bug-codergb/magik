@@ -1,5 +1,7 @@
 export interface R<T> {
   code: number
   message: string
-  data: T
+  data: T,
+  rows:T[],
+  total:number,
 }

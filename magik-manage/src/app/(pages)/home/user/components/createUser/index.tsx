@@ -15,6 +15,7 @@ import { Form, Input, Radio, Select,message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { IRole } from "@/app/interface/IRole";
 import {IUser} from "@/app/interface/IUser";
+import {request} from "@/app/utils/request";
 
 interface IProps {
   success?: () => void;
@@ -47,15 +48,15 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
 
   const [roleList, setRole] = useState<IRole[]>([]);
   useEffect(() => {
-    fetch("/api/role/all?page=1&limit=10000", {
-      method: "post",
+    request({
+      url:"/api/role/all",
+      params:{
+        page:1,
+        limit:10000
+      }
+    }).then((res)=>{
+      setRole(res.rows);
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        setRole(res.rows);
-      });
   }, []);
   const onClose = () => {
     setOpen(false);
@@ -94,21 +95,14 @@ const CreateUser: FC<IProps> = forwardRef((props, propsRef) => {
     let params = {
       ...val,
     };
-    fetch(isUpdate.current ? `/api/user/update/${user.userId}`:"/api/user/create", {
-      body: JSON.stringify(params),
-      method: "post",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then(() => {
-        setOpen(false);
-        success && success();
-        message.success("更新成功");
-      });
+    request({
+      url:isUpdate.current ? `/api/user/update/${user.userId}`:"/api/user/create",
+      body:params,
+    }).then(() => {
+      setOpen(false);
+      success && success();
+      message.success(isUpdate.current ?"更新成功":"创建成功");
+    });
   };
 
   const [isShowAvatar, setShowAvatar] = useState<boolean>(false);

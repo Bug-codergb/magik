@@ -10,13 +10,16 @@ import { Table, Space, Button, Flex, Pagination,Spin } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
 import { AnyObject } from "antd/es/_util/type";
+import {request} from "@/app/utils/request";
 interface IProps<T extends AnyObject> {
   columns: TableColumnsType<T>;
   tableData?: T[];
   url: string;
   pagination: boolean;
-  params: Object;
-  method?: string;
+  params?: Record<string, any>;
+  body?:Record<string, any>,
+  headers:Record<string, any>
+  method?: "get"|"post"|"delete"|"put";
   tableHeader?: ReactNode;
   tableToolButton?: ReactNode;
   rowKey?: string;
@@ -34,24 +37,31 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
     tableToolButton,
     pagination,
     rowKey = "id",
+    body={},
+    params={},
+    headers
   } = props;
   const [tableData, setTableData] = useState<T[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [isLoading,setLoading] = useState<boolean>(true);
   const getTableData = (page: number = 1, limit: number = 10) => {
-    fetch(`${url}?page=${page}&limit=${limit}`, {
-      method: method ?? "post",
+    request({
+      url,
+      method:method ?? "post",
+      params:{
+        ...params,
+        page,
+        limit
+      },
+      body,
+      headers
+    }).then((res)=>{
+      if (res.code === 200) {
+        pagination ? setTableData(res.rows) : setTableData(res.data);
+        pagination ? setTotal(res.total) : "";
+        setLoading(false)
+      }
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        if (res.code === 200) {
-          pagination ? setTableData(res.rows) : setTableData(res.data);
-          pagination ? setTotal(res.total) : "";
-          setLoading(false)
-        }
-      });
   };
 
   useEffect(() => {
@@ -59,9 +69,15 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
     getTableData();
   }, [url]);
 
+
+  const search=()=>{
+    setCurrentPage(1);
+    getTableData(1,pageSize);
+  }
+
   useImperativeHandle(propsRef, () => {
     return {
-      search: getTableData,
+      search,
     };
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,8 +88,7 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
   };
   const sizeChange = (current: number, size: number) => {
     setPageSize(size);
-    setCurrentPage(1);
-    getTableData(1, size);
+    search();
   };
   return (
     <div className={"table-box"}>

@@ -1,7 +1,6 @@
 "use client";
 import ProTable from "@/app/components/pro-table/index";
 import CreateUser from "./components/createUser/index";
-
 import type { TableColumnsType } from "antd";
 import { Button, Space, Tag, Avatar,Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
