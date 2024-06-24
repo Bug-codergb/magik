@@ -30,7 +30,11 @@ export async function POST(request:NextRequest):Promise<never|NextResponse<any>>
         if(menuList.length!==0){
           const menu = getFirstMenu(menuList[0]);
           if(menu) {
-            cookies().set("authorization", ret.data.token);
+            const date = new Date();
+            cookies().set("authorization", ret.data.token,{
+              httpOnly:true,
+              expires:date.setTime(date.getTime()+(24*60*60*1000))//一天
+            });
             cookies().set("user-id",ret.data.userId);
             cookies().set("user-name",ret.data.userName);
             cookies().set("avatar-url",ret.data.avatarUrl);
