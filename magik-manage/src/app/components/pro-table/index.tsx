@@ -59,8 +59,12 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
       if (res.code === 200) {
         pagination ? setTableData(res.rows) : setTableData(res.data);
         pagination ? setTotal(res.total) : "";
-        setLoading(false)
+
+      }else{
+
       }
+    }).finally(()=>{
+      setLoading(false)
     })
   };
 

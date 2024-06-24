@@ -7,6 +7,7 @@ export async function POST(request:NextRequest){
       method:"post",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
+        "Authorization":request.headers.get("Authorization") || ""
       },
     });
     const ret = await res.json();

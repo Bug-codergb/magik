@@ -1,6 +1,7 @@
 package com.magik.controller.menu;
 
 import com.github.pagehelper.Page;
+import com.magik.annotation.LoginAuth;
 import com.magik.bean.Menu;
 import com.magik.dto.menu.MenuDTO;
 import com.magik.result.PageResult;
@@ -24,6 +25,7 @@ public class MenuController {
     menuService.createMenu(menuDTO);
     return R.ok("");
   }
+  @LoginAuth
   @PostMapping("/list")
   public PageResult<Menu> getMenuList(@RequestParam("page") Integer page,
                                       @RequestParam("limit") Integer limit){
@@ -35,6 +37,7 @@ public class MenuController {
     menuService.deleteMenuById(id);
     return R.ok("");
   }
+  @LoginAuth
   @PostMapping("/list/user/{userId}")
   public R<List<Menu>> getUserMenu(@PathVariable("userId") String userId){
     List<Menu> menuList = menuService.getUserMenu(userId);

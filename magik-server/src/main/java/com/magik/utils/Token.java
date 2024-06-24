@@ -34,7 +34,11 @@ public class Token {
     return token;
   }
   public Claims parseToken(String token) throws Exception{
-    Claims claims = Jwts.parser().setSigningKey(privateKey).parseClaimsJws(token).getBody();
+    ClassPathResource resource = new ClassPathResource("key/private.key");
+    String keyPath  =resource.getFile().getPath();
+    String key = new ReadFileToString(keyPath).readFile();
+    setPrivateKey(key);
+    Claims claims = Jwts.parser().setSigningKey(getPrivateKey()).parseClaimsJws(token).getBody();
     return claims;
   }
 }

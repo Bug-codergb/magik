@@ -21,6 +21,7 @@ export async function POST(request:NextRequest):Promise<never|NextResponse<any>>
         method:"post",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
+          "Authorization":ret.data.token
         },
       })
       const userMenuData = await response.json();
@@ -30,7 +31,10 @@ export async function POST(request:NextRequest):Promise<never|NextResponse<any>>
           const menu = getFirstMenu(menuList[0]);
           if(menu) {
             cookies().set("authorization", ret.data.token);
-            return NextResponse.json({
+            cookies().set("user-id",ret.data.userId);
+            cookies().set("user-name",ret.data.userName);
+            cookies().set("avatar-url",ret.data.avatarUrl);
+            const response =  NextResponse.json({
               code:200,
               data:{
                 ...ret.data,
@@ -38,6 +42,8 @@ export async function POST(request:NextRequest):Promise<never|NextResponse<any>>
               },
               message:"success"
             })
+            response.headers.append("Authorization",ret.data.token);
+            return response;
           }
         }else{
           return NextResponse.json({
