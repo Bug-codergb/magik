@@ -11,4 +11,9 @@
     from file
     where id=#{id}
   </select>
+  <select id="getFileUrl" resultType="java.lang.String">
+    select url
+    from file
+    where id=#{id}
+  </select>
 </mapper>

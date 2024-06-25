@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.magik.mapper.lists.ListsMapper">
+  <insert id="createLists">
+    insert into list(id,name,description,userId,attr,avatar,cover) values (#{id},#{name},
+                                                                           #{description},
+                                                                           #{userId},
+                                                                           #{attr},
+                                                                           #{avatar},#{cover})
+  </insert>
+
+  <resultMap id="listsResultMap" type="Lists">
+    <id property="id" column="id"></id>
+    <result property="name" column="name"></result>
+    <result property="description" column="description"></result>
+    <result property="attr" column="attr"></result>
+    <result property="createTime" column="createTime"></result>
+    <result property="updateTime" column="updateTime"></result>
+    <association property="user" column="userId"  javaType="User" select="com.magik.mapper.user.UserMapper.getUserById"></association>
+    <association property="avatarUrl" column="avatar" javaType="java.lang.String" select="com.magik.mapper.upload.UploadMapper.getFileUrl"></association>
+    <association property="coverUrl" column="cover" javaType="java.lang.String" select="com.magik.mapper.upload.UploadMapper.getFileUrl"></association>
+  </resultMap>
+  <select id="getAllLists" resultMap="listsResultMap">
+    select *
+    from list
+  </select>
+  <delete id="deleteLists">
+    delete from list
+    where id=#{id}
+  </delete>
+  <update id="updateLists">
+    update list set
+           <trim suffixOverrides=",">
+             <if test="name!=null">
+               name=#{name},
+             </if>
+             <if test="description!=null">
+               description=#{description},
+             </if>
+             <if test="userId!=null">
+               userId=#{userId},
+             </if>
+             <if test="attr!=null">
+               attr=#{attr},
+             </if>
+             <if test="avatar!=null">
+               avatar=#{avatar},
+             </if>
+             <if test="cover!=null">
+               cover=#{cover}
+             </if>
+           </trim>
+    where id=#{id}
+  </update>
+</mapper>

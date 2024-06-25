@@ -19,4 +19,5 @@ public interface UserMapper {
   public String getUserAvatar(@Param("userId") String userId);
   public int deleteUser(@Param("userId") String userId);
   public int updateUser(UserDTO user);
+ // public User getUserById(@Param("userId") String userId);
 }

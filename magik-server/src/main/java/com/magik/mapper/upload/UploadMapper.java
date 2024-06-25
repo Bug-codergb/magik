@@ -10,4 +10,5 @@ import java.util.List;
 public interface UploadMapper extends BaseMapper<Upload> {
   public int uploadFile(Upload upload);
   public Upload getFileDetail(@Param("id") String id);
+  public String getFileUrl(@Param("id") String id);
 }
