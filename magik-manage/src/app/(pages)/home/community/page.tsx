@@ -1,4 +1,4 @@
 const Community=()=>{
-  return <div>社区</div>
+  return <div className={"card table-box"}>社区</div>
 }
 export default Community;

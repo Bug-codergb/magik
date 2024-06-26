@@ -8,6 +8,7 @@ import {
   useEffect,
 } from "react";
 import { Modal } from "antd";
+import "@/app/cropper.css";
 import Cropper from "cropperjs";
 interface IProps {
   aspectRatio: number;
@@ -71,7 +72,7 @@ const UploadFile: FC<IProps> = forwardRef((props, propsRef): ReactNode => {
       if (cropper) {
         const canvasFile = cropper.getCroppedCanvas({
           imageSmoothingQuality: "high",
-          width: 500,
+          width: 300,
           imageSmoothingEnabled: false,
           fillColor: "#fff",
         });

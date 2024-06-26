@@ -1,4 +1,4 @@
 const Comment=()=>{
-  return <div>评论</div>
+  return <div className={"table-box card"}>评论</div>
 }
 export default Comment;
