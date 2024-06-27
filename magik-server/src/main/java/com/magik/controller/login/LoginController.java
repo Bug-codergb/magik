@@ -15,10 +15,10 @@ public class LoginController {
   private UserService userService;
   @PostMapping("/login")
   public R<User> login(@RequestBody User user) throws Exception{
-    Token token = new Token();
-    String tokenStr = token.createJWT(user);
-    System.out.println(user.getUserName());
+
     User userInfo = userService.getUserByName(user.getUserName());
+    Token token = new Token();
+    String tokenStr = token.createJWT(userInfo);
     userInfo.setPassword("***");
     userInfo.setToken(tokenStr);
     return R.ok(userInfo);
