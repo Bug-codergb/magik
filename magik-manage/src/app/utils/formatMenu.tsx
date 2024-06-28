@@ -12,7 +12,7 @@ export function formatMenu(menu: IMenu[]): MenuItem[] {
     let Component = (iconList as Record<string, any>)[item.icon];
     let row: MenuItem = {
       path: item.path,
-      key: item.path,//item.id,
+      key: item.path, //item.id,
       label:
         item.children && item.children.length !== 0 ? (
           item.title

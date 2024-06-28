@@ -6,20 +6,20 @@ import {
   useState,
   useImperativeHandle,
 } from "react";
-import { Table, Space, Button, Flex, Pagination,Spin } from "antd";
+import { Table, Space, Button, Flex, Pagination, Spin } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { IMenu } from "@/app/interface/IMenu";
 import { AnyObject } from "antd/es/_util/type";
-import {request} from "@/app/utils/request";
+import { request } from "@/app/utils/request";
 interface IProps<T extends AnyObject> {
   columns: TableColumnsType<T>;
   tableData?: T[];
   url: string;
   pagination: boolean;
   params?: Record<string, any>;
-  body?:Record<string, any>,
-  headers:Record<string, any>
-  method?: "get"|"post"|"delete"|"put";
+  body?: Record<string, any>;
+  headers: Record<string, any>;
+  method?: "get" | "post" | "delete" | "put";
   tableHeader?: ReactNode;
   tableToolButton?: ReactNode;
   rowKey?: string;
@@ -37,47 +37,46 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
     tableToolButton,
     pagination,
     rowKey = "id",
-    body={},
-    params={},
-    headers
+    body = {},
+    params = {},
+    headers,
   } = props;
   const [tableData, setTableData] = useState<T[]>([]);
   const [total, setTotal] = useState<number>(0);
-  const [isLoading,setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const getTableData = (page: number = 1, limit: number = 10) => {
     request({
       url,
-      method:method ?? "post",
-      params:{
+      method: method ?? "post",
+      params: {
         ...params,
         page,
-        limit
+        limit,
       },
       body,
-      headers
-    }).then((res)=>{
-      if (res.code === 200) {
-        pagination ? setTableData(res.rows) : setTableData(res.data);
-        pagination ? setTotal(res.total) : "";
-
-      }else{
-
-      }
-    }).finally(()=>{
-      setLoading(false)
+      headers,
     })
+      .then((res) => {
+        if (res.code === 200) {
+          pagination ? setTableData(res.rows) : setTableData(res.data);
+          pagination ? setTotal(res.total) : "";
+        } else {
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     getTableData();
   }, [url]);
 
-
-  const search=()=>{
+  const search = () => {
     setCurrentPage(1);
-    getTableData(1,pageSize);
-  }
+    getTableData(1, pageSize);
+  };
 
   useImperativeHandle(propsRef, () => {
     return {
@@ -104,7 +103,17 @@ const ProTable = forwardRef(function Fn<T extends AnyObject>(
         <Table
           rowKey={rowKey}
           sticky={true}
-          loading={isLoading ? { indicator: <div><Spin /></div>}:false}
+          loading={
+            isLoading
+              ? {
+                  indicator: (
+                    <div>
+                      <Spin />
+                    </div>
+                  ),
+                }
+              : false
+          }
           size={"middle"}
           columns={columns}
           dataSource={tableData}

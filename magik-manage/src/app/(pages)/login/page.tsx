@@ -1,10 +1,14 @@
-"use client"
-import { Button, Checkbox, Form, Input,Col, Row,notification  } from "antd";
-import { LockOutlined, UserOutlined ,CloseCircleOutlined} from "@ant-design/icons";
+"use client";
+import { Button, Checkbox, Form, Input, Col, Row, notification } from "antd";
+import {
+  LockOutlined,
+  UserOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { changeUserAction ,selectUserMsg} from "@/lib/features/user/userSlice"
-import { useRouter } from 'next/navigation'
-import {IMenu} from "@/app/interface/IMenu";
+import { changeUserAction, selectUserMsg } from "@/lib/features/user/userSlice";
+import { useRouter } from "next/navigation";
+import { IMenu } from "@/app/interface/IMenu";
 //import { cookies } from 'next/headers'
 
 type FieldType = {
@@ -13,29 +17,31 @@ type FieldType = {
   remember?: string;
 };
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useAppDispatch();
   //const cookieStore = cookies()
   const [api, contextHolder] = notification.useNotification();
   const userMsg = useAppSelector(selectUserMsg);
-  const onFinish = async (val:any) => {
-    let params={
-      userName:val.username as string,
-      password:val.password as string
+  const onFinish = async (val: any) => {
+    let params = {
+      userName: val.username as string,
+      password: val.password as string,
+    };
+    const ret = await dispatch(changeUserAction(params));
+    if (ret.payload) {
+      router.push(ret.payload.menu.path);
     }
-     const ret = await dispatch(changeUserAction(params));
-     if(ret.payload){
-       router.push(ret.payload.menu.path);
-     }
   };
   const onFinishFailed = () => {};
   return (
     <div className={"size-full relative"}>
       {contextHolder}
-      <div className={"form-container absolute w-500px p-12 shadow-login left-2/4 top-1/2 translate-y-50 rounded-lg"}>
-        <div className={"title mb-3.5"}>
-          Magik
-        </div>
+      <div
+        className={
+          "form-container absolute w-500px p-12 shadow-login left-2/4 top-1/2 translate-y-50 rounded-lg"
+        }
+      >
+        <div className={"title mb-3.5"}>Magik</div>
         <Form
           name="basic"
           labelCol={{ span: 0 }}
@@ -74,18 +80,28 @@ const Login = () => {
           <Form.Item>
             <Row gutter={20}>
               <Col span={12}>
-                <Button block shape={"round"} size={"large"} icon={ <CloseCircleOutlined />}>
+                <Button
+                  block
+                  shape={"round"}
+                  size={"large"}
+                  icon={<CloseCircleOutlined />}
+                >
                   重置
                 </Button>
               </Col>
               <Col span={12}>
-                <Button block type="primary" size={"large"} icon={<UserOutlined />} shape={"round"} htmlType="submit">
+                <Button
+                  block
+                  type="primary"
+                  size={"large"}
+                  icon={<UserOutlined />}
+                  shape={"round"}
+                  htmlType="submit"
+                >
                   登录
                 </Button>
               </Col>
             </Row>
-
-
           </Form.Item>
         </Form>
       </div>

@@ -11,18 +11,21 @@ class LocalCache {
         return JSON.parse(data);
       }
     }
-    return null;
+    return null
+
+
 
 
     
   }
 
   deleteCache(key: string) {
-    window.localStorage.removeItem(key);
+    window.localStorage.removeItem(key)
   }
 
   clearCache() {
-    window.localStorage.clear();
+    window.localStorage.clear()
   }
 }
-export default new LocalCache();
+let cache = new LocalCache();
+export default cache

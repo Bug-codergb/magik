@@ -1,4 +1,4 @@
-const File=()=>{
-  return <div>文件</div>
-}
-export default File
+const File = () => {
+  return <div>文件</div>;
+};
+export default File;
