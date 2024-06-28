@@ -6,6 +6,7 @@ import com.magik.dto.user.UserDTO;
 import com.magik.result.PageResult;
 import com.magik.result.R;
 import com.magik.service.user.UserService;
+import org.simpleframework.xml.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,5 +62,10 @@ public class UserController {
       userService.setUserRole(userRoleList);
     }
     return R.ok("");
+  }
+  @GetMapping("/detail/{id}")
+  public R<User> getUserDetail(@PathVariable("id") String id){
+    User user = userService.getUserById(id);
+    return R.ok(user);
   }
 }

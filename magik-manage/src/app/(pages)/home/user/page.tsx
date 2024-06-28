@@ -7,6 +7,7 @@ import { UserOutlined } from "@ant-design/icons";
 import type { IUser } from "@/app/interface/IUser";
 import { useRef } from "react";
 const type: string[] = ["success", "processing", "error", "warning", "default"];
+import { useRouter } from 'next/navigation'
 const Page = () => {
   const columns: TableColumnsType<IUser> = [
     {
@@ -54,7 +55,7 @@ const Page = () => {
       width: 200,
       render: (_, record) => (
         <Space size="small">
-          <Button type={"link"} onClick={() => handleEditUser(record)}>
+          <Button type={"link"} onClick={() => handleShowUserDetail(record)}>
             查看
           </Button>
           <Button type={"link"} onClick={() => handleEditUser(record)}>
@@ -67,9 +68,13 @@ const Page = () => {
       ),
     },
   ];
+  const router = useRouter();
   const handleEditUser = (row: IUser) => {
     createUserRef.current?.showDrawer(row);
   };
+  const handleShowUserDetail=(row:IUser)=>{
+    router.push(`/home/user/${row.userId}`);
+  }
   const handleDeleteUser = async (row: IUser) => {
     const res= await fetch(`/api/user/delete/${row.userId}`,{
       method:"post"

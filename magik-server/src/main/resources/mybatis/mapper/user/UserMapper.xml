@@ -33,6 +33,7 @@
     <result property="createTime" column="createTime"></result>
     <result property="updateTime" column="updateTime"></result>
     <result property="avatarUrl" column="url"></result>
+    <result property="gender" column="gender"></result>
     <collection property="role"
                 ofType="Role"
                 select="com.magik.mapper.user.UserMapper.getUserRole" column="userId"></collection>

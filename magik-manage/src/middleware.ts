@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import type { NextRequest } from 'next/server'
-import {next} from "sucrase/dist/types/parser/tokenizer";
 export function middleware(request: NextRequest) {
   const nextUrl = request.nextUrl.pathname;
   const auth = cookies().get("authorization");
   let isLogin = !!auth;
+
   if(nextUrl === "/login"){
     if(isLogin){
       return NextResponse.redirect(new URL('/home', request.url))
     }else{
-      return NextResponse.rewrite(new URL('/login', request.url))
+      return NextResponse.next();
     }
   }if(nextUrl.startsWith("/api")){
     const response = NextResponse.next()
@@ -20,7 +20,13 @@ export function middleware(request: NextRequest) {
     if(!isLogin){
       return NextResponse.redirect(new URL('/login', request.url))
     }else{
-      return NextResponse.rewrite(new URL(nextUrl, request.url))
+      const newHeader = new Headers(request.headers);
+      newHeader.append("_nextUrl",request.nextUrl.pathname);
+      return NextResponse.next({
+        request:{
+          headers:newHeader
+        }
+      });
     }
   }
 }
