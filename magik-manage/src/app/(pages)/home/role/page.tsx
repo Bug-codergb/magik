@@ -1,8 +1,8 @@
 "use client";
-import {useRef} from "react";
+import { useRef } from "react";
 import ProTable from "@/app/components/pro-table/index";
-import MenuPermission from "./components/menuPermission/index"
-import CreateRole from "./components/createRole/index"  ;
+import MenuPermission from "./components/menuPermission/index";
+import CreateRole from "./components/createRole/index";
 import type { TableColumnsType } from "antd";
 import { IRole } from "@/app/interface/IRole";
 import { Button } from "antd";
@@ -22,13 +22,17 @@ const Role = () => {
       dataIndex: "updateTime",
     },
     {
-      title:"操作",
-      width:200,
-      fixed:"right",
-      render:(_,row)=>{
-        return <Button type="link" onClick={()=>handleEditRoleMenu(row)}>编辑菜单权限</Button>
-      }
-    }
+      title: "操作",
+      width: 200,
+      fixed: "right",
+      render: (_, row) => {
+        return (
+          <Button type="link" onClick={() => handleEditRoleMenu(row)}>
+            编辑菜单权限
+          </Button>
+        );
+      },
+    },
   ];
   const createRoleRef = useRef();
   const handleCreateRole = () => {
@@ -36,13 +40,13 @@ const Role = () => {
   };
 
   const tableRef = useRef();
-  const search=()=>{
+  const search = () => {
     tableRef.current && tableRef.current.search();
-  }
+  };
   const menuPermissionRef = useRef();
-  const handleEditRoleMenu=(row:IRole)=>{
-    menuPermissionRef.current.showDrawer(row)
-  }
+  const handleEditRoleMenu = (row: IRole) => {
+    menuPermissionRef.current.showDrawer(row);
+  };
   return (
     <div className={"card table-box"}>
       <ProTable
@@ -57,8 +61,8 @@ const Role = () => {
           </Button>
         }
       />
-      <CreateRole ref={createRoleRef} success={search}/>
-      <MenuPermission ref={menuPermissionRef} success={search}/>
+      <CreateRole ref={createRoleRef} success={search} />
+      <MenuPermission ref={menuPermissionRef} success={search} />
     </div>
   );
 };

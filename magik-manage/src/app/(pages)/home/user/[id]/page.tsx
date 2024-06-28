@@ -1,4 +1,4 @@
-function UserDetail():React.ReactNode{
-  return <div></div>
+function UserDetail(): React.ReactNode {
+  return <div></div>;
 }
 export default UserDetail;

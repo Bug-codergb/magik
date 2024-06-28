@@ -1,9 +1,9 @@
 import Layout from "antd/lib/layout/layout";
-import {Header}  from "antd/lib/layout/layout";
-import{Footer}  from "antd/lib/layout/layout";
-import {Content} from "antd/lib/layout/layout"
-import Sider  from "antd/lib/layout/Sider";
-import moment from 'moment';
+import { Header } from "antd/lib/layout/layout";
+import { Footer } from "antd/lib/layout/layout";
+import { Content } from "antd/lib/layout/layout";
+import Sider from "antd/lib/layout/Sider";
+import moment from "moment";
 import Nav from "@/app/components/nav";
 import TopBar from "@/app/components/topBar/TopBar";
 export default function HomeLayout({
@@ -18,7 +18,7 @@ export default function HomeLayout({
       </Sider>
       <Layout hasSider={false}>
         <Header>
-          <TopBar/>
+          <TopBar />
         </Header>
         <Content className={"p-4"}>{children}</Content>
         <Footer className={"g-footer py-3"}>

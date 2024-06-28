@@ -1,98 +1,112 @@
-"use client"
+"use client";
 import ProTable from "@/app/components/pro-table";
 import type { TableColumnsType } from "antd";
-import { Avatar ,Space,Tag,Image,Button} from "antd";
-import { UserOutlined } from '@ant-design/icons';
-import {ILists} from "@/app/interface/ILists";
-const List=()=>{
+import { Avatar, Space, Tag, Image, Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { ILists } from "@/app/interface/ILists";
+const List = () => {
   const columns: TableColumnsType<ILists> = [
     {
       title: "名称",
       dataIndex: "name",
-      width:150,
+      width: 150,
     },
     {
-      title:"简介",
-      dataIndex:"description",
-      width:150
+      title: "简介",
+      dataIndex: "description",
+      width: 150,
     },
     {
-      title:"成员",
-      dataIndex:"count",
-      width:90
+      title: "成员",
+      dataIndex: "count",
+      width: 90,
     },
     {
-      title:"属性",
-      dataIndex:"attr",
-      width:100,
-      render:(_,row)=>{
-        return <Tag color={row.attr ===0?"red":"success"}>{row.attr === 0 ?"私有":"公共"}</Tag>
-      }
+      title: "属性",
+      dataIndex: "attr",
+      width: 100,
+      render: (_, row) => {
+        return (
+          <Tag color={row.attr === 0 ? "red" : "success"}>
+            {row.attr === 0 ? "私有" : "公共"}
+          </Tag>
+        );
+      },
     },
     {
-      title:"创建人",
-      dataIndex:"user",
-      width:120,
-      key:"user",
-      render:(_,row)=>{
-        return <Space>
-          <Avatar size={50} icon={<UserOutlined />} src={row.user.avatarUrl}/>
-          <span>{row.user.userName}</span>
-        </Space>
-      }
+      title: "创建人",
+      dataIndex: "user",
+      width: 120,
+      key: "user",
+      render: (_, row) => {
+        return (
+          <Space>
+            <Avatar
+              size={50}
+              icon={<UserOutlined />}
+              src={row.user.avatarUrl}
+            />
+            <span>{row.user.userName}</span>
+          </Space>
+        );
+      },
     },
     {
-      title:"封面",
-      dataIndex:"coverUrl",
-      width:180,
-      render:(_,row)=>{
-        return <div>
-          <Image
-              width={100}
-              src={row.coverUrl}
-          />
-        </div>
-      }
+      title: "封面",
+      dataIndex: "coverUrl",
+      width: 180,
+      render: (_, row) => {
+        return (
+          <div>
+            <Image width={100} src={row.coverUrl} />
+          </div>
+        );
+      },
     },
     {
-      title:"缩略图",
-      dataIndex:"avatarUrl",
-      width:200,
-      render:(_,row)=>{
-        return <div>
-          <Image
-              width={100}
-              src={row.avatarUrl}
-          />
-        </div>
-      }
+      title: "缩略图",
+      dataIndex: "avatarUrl",
+      width: 200,
+      render: (_, row) => {
+        return (
+          <div>
+            <Image width={100} src={row.avatarUrl} />
+          </div>
+        );
+      },
     },
     {
-      title:"创建时间",
-      dataIndex:"createTime",
-      width:180
+      title: "创建时间",
+      dataIndex: "createTime",
+      width: 180,
     },
     {
-      title:"操作",
-      key:"action",
-      fixed:"right",
-      width:200,
-      render:(_,row)=>{
-        return <Space size={"small"}>
-          <Button type={"link"}>查看</Button>
-          <Button type={"link"}>编辑</Button>
-          <Button type={"link"} danger>删除</Button>
-        </Space>
-      }
-    }
-  ]
-  return <div className={"card table-box"}>
-    <ProTable<ILists> columns={columns}
-                      url={"/api/lists"}
-                      pagination={true}
-                      tableToolButton={
-                        <Button type={"primary"}>新建列表</Button>
-                      }/>
-  </div>
-}
-export default List
+      title: "操作",
+      key: "action",
+      fixed: "right",
+      width: 200,
+      render: (_, row) => {
+        return (
+          <Space size={"small"}>
+            <Button type={"link"}>查看</Button>
+            <Button type={"link"}>编辑</Button>
+            <Button type={"link"} danger>
+              删除
+            </Button>
+          </Space>
+        );
+      },
+    },
+  ];
+  return (
+    <div className={"card table-box"}>
+      <ProTable<ILists>
+        columns={columns}
+        url={"/api/lists"}
+        pagination={true}
+        tableToolButton={<Button type={"primary"}>新建列表</Button>}
+      />
+    </div>
+  );
+};
+export default List;

@@ -2,30 +2,30 @@
 import ProTable from "@/app/components/pro-table/index";
 import CreateUser from "./components/createUser/index";
 import type { TableColumnsType } from "antd";
-import { Button, Space, Tag, Avatar,Divider } from "antd";
+import { Button, Space, Tag, Avatar, Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import type { IUser } from "@/app/interface/IUser";
 import { useRef } from "react";
 const type: string[] = ["success", "processing", "error", "warning", "default"];
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 const Page = () => {
   const columns: TableColumnsType<IUser> = [
     {
       title: "用户名称",
       dataIndex: "userName",
-      width:150,
+      width: 150,
     },
     {
       title: "头像",
       dataIndex: "avatarUrl",
-      width:120,
+      width: 120,
       render: (_, row) => {
         return <Avatar size={64} icon={<UserOutlined />} src={row.avatarUrl} />;
       },
     },
     {
       title: "角色",
-      width:280,
+      width: 280,
       render: (_, row) => {
         let role = row.role || [];
         return role.map((item, index) => {
@@ -36,17 +36,18 @@ const Page = () => {
           );
         });
       },
-    },{
-      title:"性别",
-      width:80,
-      render:(_,row)=>{
-        return <span>{row.gender===0?"男":"女"}</span>
-      }
+    },
+    {
+      title: "性别",
+      width: 80,
+      render: (_, row) => {
+        return <span>{row.gender === 0 ? "男" : "女"}</span>;
+      },
     },
     {
       title: "创建时间",
       dataIndex: "createTime",
-      width:140,
+      width: 140,
     },
     {
       title: "操作",
@@ -72,15 +73,15 @@ const Page = () => {
   const handleEditUser = (row: IUser) => {
     createUserRef.current?.showDrawer(row);
   };
-  const handleShowUserDetail=(row:IUser)=>{
+  const handleShowUserDetail = (row: IUser) => {
     router.push(`/home/user/${row.userId}`);
-  }
+  };
   const handleDeleteUser = async (row: IUser) => {
-    const res= await fetch(`/api/user/delete/${row.userId}`,{
-      method:"post"
-    })
+    const res = await fetch(`/api/user/delete/${row.userId}`, {
+      method: "post",
+    });
     const ret = await res.json();
-    if(ret.code === 200){
+    if (ret.code === 200) {
       handleRefresh();
     }
   };
@@ -109,7 +110,6 @@ const Page = () => {
         }
       />
       <CreateUser ref={createUserRef} success={handleRefresh} />
-
     </div>
   );
 };
