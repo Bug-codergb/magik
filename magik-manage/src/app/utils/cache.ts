@@ -1,31 +1,26 @@
 class LocalCache {
-  setCache(key: string, value: any) {
-    typeof window !== 'undefined' && window.localStorage.setItem(key, JSON.stringify(value));
-  }
+	setCache(key: string, value: any) {
+		typeof window !== 'undefined' && window.localStorage.setItem(key, JSON.stringify(value))
+	}
 
-  getCache(key: string) {
-    if(typeof window !== 'undefined'){
-      const data = window.localStorage.getItem(key);
+	getCache(key: string) {
+		if (typeof window !== 'undefined') {
+			const data = window.localStorage.getItem(key)
 
-      if (data) {
-        return JSON.parse(data);
-      }
-    }
-    return null
+			if (data) {
+				return JSON.parse(data)
+			}
+		}
+		return null
+	}
 
+	deleteCache(key: string) {
+		window.localStorage.removeItem(key)
+	}
 
-
-
-    
-  }
-
-  deleteCache(key: string) {
-    window.localStorage.removeItem(key)
-  }
-
-  clearCache() {
-    window.localStorage.clear()
-  }
+	clearCache() {
+		window.localStorage.clear()
+	}
 }
-let cache = new LocalCache();
+let cache = new LocalCache()
 export default cache
