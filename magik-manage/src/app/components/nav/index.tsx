@@ -5,6 +5,7 @@ import getFirstMenu from '@/app/utils/getFirstMenu';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 type MenuItem = Required<MenuProps>['items'][number];
 
 async function getData(): Promise<R<IMenu[]>> {
@@ -30,6 +31,8 @@ export default async function () {
 	if (res.code === 200) {
 		rawNav = formatMenu(res.data);
 		firstMenu = getFirstMenu(res.data[0]);
+	} else if (res.code === 401) {
+		redirect('/logout');
 	}
 	const headersList = headers();
 	const _nextUrl = headersList.get('_nextUrl') || (firstMenu ? firstMenu.path : '');

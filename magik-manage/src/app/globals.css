@@ -74,3 +74,11 @@ body,html {
 .ant-menu-root{
   border-inline-end: none!important;
 }
+.m-text-nowrap{
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}

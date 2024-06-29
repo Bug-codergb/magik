@@ -5,7 +5,6 @@ export function middleware(request: NextRequest) {
 	const nextUrl = request.nextUrl.pathname;
 	const auth = cookies().get('authorization');
 	let isLogin = !!auth;
-
 	if (nextUrl === '/login') {
 		if (isLogin) {
 			return NextResponse.redirect(new URL('/home', request.url));
@@ -17,6 +16,9 @@ export function middleware(request: NextRequest) {
 		const response = NextResponse.next();
 		response.headers.append('Authorization', auth ? auth.value : '');
 		return response;
+	}
+	if (nextUrl === '/logout') {
+		return NextResponse.next();
 	} else {
 		if (!isLogin) {
 			return NextResponse.redirect(new URL('/login', request.url));
@@ -33,5 +35,5 @@ export function middleware(request: NextRequest) {
 }
 let a = 12;
 export const config = {
-	matcher: ['/home/:path*', '/api/:path*', '/login'],
+	matcher: ['/home/:path*', '/api/:path*', '/login', '/logout'],
 };

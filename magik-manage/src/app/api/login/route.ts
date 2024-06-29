@@ -2,7 +2,7 @@ import { IMenu } from '@/app/interface/IMenu';
 import getFirstMenu from '@/app/utils/getFirstMenu';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-cache';
 export async function POST(request: NextRequest): Promise<never | NextResponse<any>> {
 	try {
 		const user = await request.json();
@@ -28,6 +28,7 @@ export async function POST(request: NextRequest): Promise<never | NextResponse<a
 				if (menuList.length !== 0) {
 					const menu = getFirstMenu(menuList[0]);
 					if (menu) {
+						console.log('我正在执行');
 						const date = new Date();
 						cookies().set('authorization', ret.data.token, {
 							httpOnly: true,
