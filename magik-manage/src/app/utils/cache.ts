@@ -1,26 +1,26 @@
 class LocalCache {
 	setCache(key: string, value: any) {
-		typeof window !== 'undefined' && window.localStorage.setItem(key, JSON.stringify(value))
+		typeof window !== 'undefined' && window.localStorage.setItem(key, JSON.stringify(value));
 	}
 
 	getCache(key: string) {
 		if (typeof window !== 'undefined') {
-			const data = window.localStorage.getItem(key)
+			const data = window.localStorage.getItem(key);
 
 			if (data) {
-				return JSON.parse(data)
+				return JSON.parse(data);
 			}
 		}
-		return null
+		return null;
 	}
 
 	deleteCache(key: string) {
-		window.localStorage.removeItem(key)
+		window.localStorage.removeItem(key);
 	}
 
 	clearCache() {
-		window.localStorage.clear()
+		window.localStorage.clear();
 	}
 }
-let cache = new LocalCache()
-export default cache
+let cache = new LocalCache();
+export default cache;

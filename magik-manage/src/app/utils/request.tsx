@@ -1,12 +1,12 @@
-import { R } from '@/app/interface/R'
+import { R } from '@/app/interface/R';
 
 export interface IConfig {
-	url: string
-	method?: 'get' | 'post' | 'delete' | 'put'
-	params?: Record<string, any>
-	body?: Record<string, any>
-	headers?: Record<string, any>
-	extraParams?: Record<string, any>
+	url: string;
+	method?: 'get' | 'post' | 'delete' | 'put';
+	params?: Record<string, any>;
+	body?: Record<string, any>;
+	headers?: Record<string, any>;
+	extraParams?: Record<string, any>;
 }
 function request<T = any>(config: IConfig): Promise<R<T>> {
 	const {
@@ -18,15 +18,15 @@ function request<T = any>(config: IConfig): Promise<R<T>> {
 			'Content-Type': 'application/json;charset=UTF-8',
 		},
 		extraParams = {},
-	} = config
-	const isGet = method === 'get'
-	let paramsStr = ''
+	} = config;
+	const isGet = method === 'get';
+	let paramsStr = '';
 	if (params && Object.keys(params).length !== 0) {
-		const p = new URLSearchParams()
+		const p = new URLSearchParams();
 		for (const key in params) {
-			p.append(key, params[key])
+			p.append(key, params[key]);
 		}
-		paramsStr = `?${p.toString()}`
+		paramsStr = `?${p.toString()}`;
 	}
 	return new Promise((resolve, reject) => {
 		fetch(`${url}${paramsStr}`, {
@@ -36,14 +36,14 @@ function request<T = any>(config: IConfig): Promise<R<T>> {
 			...extraParams,
 		})
 			.then((res) => {
-				return res.json()
+				return res.json();
 			})
 			.then((res) => {
-				resolve(res)
+				resolve(res);
 			})
 			.catch((e: any) => {
-				reject(e)
-			})
-	})
+				reject(e);
+			});
+	});
 }
-export { request }
+export { request };

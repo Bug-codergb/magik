@@ -1,5 +1,8 @@
 import { FC, ReactNode } from 'react';
 const Home: FC = (): ReactNode => {
-	return <div className={'card table-box size-full text-slate-950'}>1111</div>;
+	console.log(process.env.NODE_ENV);
+	return (
+		<div className={'card table-box size-full text-slate-950'}>11211{process.env.SERVER_HOST}</div>
+	);
 };
 export default Home;
