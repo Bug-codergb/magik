@@ -31,7 +31,9 @@
 <script setup>
 const route = useRoute();
 const currentRoute = useCurrentRoute();
-console.log(route);
+definePageMeta({
+  middleware: ["auth"]
+});
 </script>
 <style scoped lang="less">
 .home-container {
