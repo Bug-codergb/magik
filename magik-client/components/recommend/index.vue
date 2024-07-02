@@ -10,7 +10,12 @@
 </template>
 <script setup>
 const momentList = ref([]);
-$fetch(`/server/moment/list?page=1&limit=100`, {
+request({
+  url: "/api/moment/list",
+  params: {
+    page: 1,
+    limit: 100
+  },
   method: "post"
 }).then(res => {
   momentList.value = res.rows;

@@ -29,9 +29,8 @@ const handleLogin = async (): Promise<void> => {
       password: formData.password
     }
   });
-  console.log(res);
+
   if (res.code === 200) {
-    console.log(1);
     navigateTo("/home");
   }
 };

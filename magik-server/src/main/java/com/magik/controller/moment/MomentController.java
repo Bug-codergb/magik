@@ -1,6 +1,7 @@
 package com.magik.controller.moment;
 
 import com.github.pagehelper.Page;
+import com.magik.annotation.LoginAuth;
 import com.magik.bean.Moment;
 import com.magik.bean.MomentFile;
 import com.magik.result.PageResult;
@@ -40,6 +41,7 @@ public class MomentController {
     }
     return R.ok("");
   }
+  @LoginAuth
   @PostMapping("/list")
   public PageResult<Moment> getAllMoment(@RequestParam("page") Integer page,
                                       @RequestParam("limit") Integer limit){
