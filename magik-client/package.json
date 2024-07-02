@@ -8,7 +8,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "start": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy":"pm2 start ./.output/server/index.mjs --name magik-client",
+    "deploy:delete":"pm2 delete magik-client"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
