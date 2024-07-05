@@ -1,6 +1,6 @@
 <template>
-  <div>1111</div>
+  <div></div>
   <slot></slot>
-  <div>2222</div>
+  <div></div>
 </template>
 <script setup></script>
