@@ -24,15 +24,17 @@
     <div class="publish user-info">个人</div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="tsx">
 import { menu } from "~/constant/menu";
 import Logo from "~/assets/svg/logo.vue";
 import type { INav } from "~/interface/nav";
 const currentIndex = ref(0);
-const router = useRouter();
+
 const currentRoute = useCurrentRoute();
-onMounted(() => {
-  currentRoute.changeCurrentRoute(menu[0]);
+onMounted(async () => {
+  const cur: string | null = sessionStorage.getItem("currentRoute");
+  const value: INav | null = menu.find(item => `${item.id}` === cur);
+  currentRoute.changeCurrentRoute(value ?? menu[0]);
 });
 const navClick = (item: INav, index: number): void => {
   currentIndex.value = index;
@@ -40,6 +42,7 @@ const navClick = (item: INav, index: number): void => {
     path: item.path
   });
   currentRoute.changeCurrentRoute(item);
+  sessionStorage.setItem("currentRoute", item.id);
   useHead({ title: `${item.title} / magik` });
 };
 </script>

@@ -1,4 +1,5 @@
 interface INav {
+  id: string;
   title: string;
   icon: Component;
   isRoute: boolean;

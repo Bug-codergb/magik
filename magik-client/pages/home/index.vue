@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <div class="header">
-          <div class="left-header">
+          <div class="left-header" :key="currentRoute.nav.id">
             <component :is="currentRoute.nav.header" />
           </div>
           <div class="right-header"></div>
@@ -31,6 +31,7 @@
 <script setup>
 const route = useRoute();
 const currentRoute = useCurrentRoute();
+// console.log(currentRoute);
 definePageMeta({
   middleware: ["auth"]
 });
