@@ -1,5 +1,6 @@
 package com.magik.mapper.user;
 
+import com.magik.bean.Moment;
 import com.magik.bean.Role;
 import com.magik.bean.User;
 import com.magik.bean.UserRole;
@@ -20,4 +21,6 @@ public interface UserMapper {
   public int deleteUser(@Param("userId") String userId);
   public int updateUser(UserDTO user);
  // public User getUserById(@Param("userId") String userId);
+
+  public List<Moment> getUserMoment(@Param("userId") String userId,Integer page,Integer limit);
 }

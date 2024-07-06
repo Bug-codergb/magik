@@ -2,6 +2,7 @@ package com.magik.service.user;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.magik.bean.Moment;
 import com.magik.bean.User;
 import com.magik.bean.UserRole;
 import com.magik.dto.user.UserDTO;
@@ -40,5 +41,10 @@ public class UserService {
   }
   public int updateUser(UserDTO user){
     return userMapper.updateUser(user);
+  }
+  public Page<Moment> getUserMoment(String userId,Integer page,Integer limit){
+    Page<Moment> m = PageHelper.startPage(page,limit);
+    List<Moment> moments = userMapper.getUserMoment(userId,page,limit);
+    return m;
   }
 }

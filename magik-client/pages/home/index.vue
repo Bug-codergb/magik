@@ -21,7 +21,7 @@
                 <Recommend />
               </template>
             </div>
-            <div class="right-body"></div>
+            <div class="right-body">1</div>
           </div>
         </el-scrollbar>
       </div>

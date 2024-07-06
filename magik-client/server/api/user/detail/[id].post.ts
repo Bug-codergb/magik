@@ -4,8 +4,10 @@ export default defineEventHandler(async event => {
     const query = getQuery(event);
     const cookie = getCookie(event, "authorization") ?? "";
 
+    console.log(cookie);
     const res = await request({
-      url: "http://localhost:8888/moment/list",
+      url: "http://localhost:8888/user/detail/110",
+      method: "get",
       params: query,
       isServer: true,
       headers: {

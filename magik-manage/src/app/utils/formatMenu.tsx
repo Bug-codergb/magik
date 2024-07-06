@@ -17,7 +17,7 @@ export function formatMenu(menu: IMenu[]): MenuItem[] {
 				item.children && item.children.length !== 0 ? (
 					item.title
 				) : (
-					<Link href={item.path} prefetch={true}>
+					<Link href={item.path} prefetch={false}>
 						{item.title}
 					</Link>
 				),

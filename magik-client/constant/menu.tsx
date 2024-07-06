@@ -10,6 +10,7 @@ import profile from "~/assets/svg/profile.vue";
 import more from "~/assets/svg/more.vue";
 
 import RecommendHeader from "~/components/recommend-header/index.vue";
+import UserHeader from "~/components/user-header/index.vue";
 export const menu: INav[] = [
   {
     title: "主页",
@@ -65,7 +66,7 @@ export const menu: INav[] = [
     icon: profile,
     isRoute: true,
     path: "/home/profile",
-    header: <div>112</div>
+    header: <UserHeader />
   },
   {
     title: "更多",

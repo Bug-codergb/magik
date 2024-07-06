@@ -1,5 +1,7 @@
 package com.magik.controller.user;
+import com.github.pagehelper.Page;
 import com.magik.annotation.LoginAuth;
+import com.magik.bean.Moment;
 import com.magik.bean.User;
 import com.magik.bean.UserRole;
 import com.magik.dto.user.UserDTO;
@@ -67,5 +69,11 @@ public class UserController {
   public R<User> getUserDetail(@PathVariable("id") String id){
     User user = userService.getUserById(id);
     return R.ok(user);
+  }
+  @GetMapping("/moment/{id}")
+  public PageResult<Moment> getUserDetail(@PathVariable("id") String userId,
+                                          @RequestParam("page") Integer page,
+                                          @RequestParam("limit") Integer limit){
+    return PageResult.success(userService.getUserMoment(userId,page,limit));
   }
 }
