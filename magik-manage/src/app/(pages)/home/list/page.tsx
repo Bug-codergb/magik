@@ -4,6 +4,8 @@ import { ILists } from '@/app/interface/ILists';
 import { UserOutlined } from '@ant-design/icons';
 import type { TableColumnsType } from 'antd';
 import { Avatar, Button, Image, Space, Tag } from 'antd';
+import { useRef } from 'react';
+import CreateList from './components/create-list';
 const List = () => {
 	const columns: TableColumnsType<ILists> = [
 		{
@@ -92,14 +94,24 @@ const List = () => {
 			},
 		},
 	];
+
+	const createListRef = useRef();
+	const handleCreateListRef = () => {
+		createListRef.current.showDrawer();
+	};
 	return (
 		<div className={'card table-box'}>
 			<ProTable<ILists>
 				columns={columns}
 				url={'/api/lists'}
 				pagination={true}
-				tableToolButton={<Button type={'primary'}>新建列表</Button>}
+				tableToolButton={
+					<Button type={'primary'} onClick={handleCreateListRef}>
+						新建列表
+					</Button>
+				}
 			/>
+			<CreateList ref={createListRef} />
 		</div>
 	);
 };

@@ -12,4 +12,12 @@ interface ILists {
 	createTime: string;
 	updateTime: string;
 }
-export type { ILists };
+interface IListsDTO {
+	name: string;
+	description: string;
+	userId: string;
+	attr: number;
+	cover: string;
+	avatar: string;
+}
+export type { ILists, IListsDTO };
