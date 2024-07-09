@@ -5,9 +5,10 @@ import { FC, ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useS
 interface IProps {
 	aspectRatio: number;
 	confirm?: (arg: any) => void;
+	realWidth?: number;
 }
 const UploadFile: FC<IProps> = forwardRef((props, propsRef): ReactNode => {
-	const { aspectRatio, confirm } = props;
+	const { aspectRatio, confirm, realWidth } = props;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [file, setFile] = useState<File | null>(null);
 	const showModal = (file?: File) => {
@@ -64,7 +65,7 @@ const UploadFile: FC<IProps> = forwardRef((props, propsRef): ReactNode => {
 			if (cropper) {
 				const canvasFile = cropper.getCroppedCanvas({
 					imageSmoothingQuality: 'high',
-					width: 300,
+					width: realWidth ?? 300,
 					imageSmoothingEnabled: false,
 					fillColor: '#fff',
 				});

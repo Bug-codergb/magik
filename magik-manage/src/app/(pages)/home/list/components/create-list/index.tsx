@@ -40,7 +40,8 @@ const CreateUser = forwardRef((props, ref) => {
 				label: '简介',
 				required: true,
 				initialValue: '',
-				tag: 'Input',
+				tag: 'TextArea',
+				attr: {},
 			},
 		],
 		[
@@ -49,25 +50,43 @@ const CreateUser = forwardRef((props, ref) => {
 				label: '属性',
 				required: true,
 				initialValue: '',
-				tag: 'Input',
+				tag: 'Radio',
+				group: [
+					{
+						label: '私有',
+						value: 0,
+					},
+					{
+						label: '公开',
+						value: 1,
+					},
+				],
 			},
 		],
 		[
 			{
 				name: 'cover',
-				label: '封面',
+				label: '横幅',
 				required: true,
 				initialValue: '',
-				tag: 'Input',
+				tag: 'Cover',
+				attr: {
+					aspectRatio: 2.99,
+					realWidth: 500,
+				},
 			},
 		],
 		[
 			{
 				name: 'avatar',
-				label: '缩略图',
+				label: '头像',
 				required: true,
 				initialValue: '',
-				tag: 'Input',
+				tag: 'Cover',
+				attr: {
+					aspectRatio: 1,
+					realWidth: 150,
+				},
 			},
 		],
 	];
@@ -76,8 +95,8 @@ const CreateUser = forwardRef((props, ref) => {
 		description: '',
 		userId: '',
 		attr: 0,
-		avatar: '',
-		cover: '',
+		avatar: { id: '', url: '' },
+		cover: { id: '', url: '' },
 	});
 	return (
 		<>

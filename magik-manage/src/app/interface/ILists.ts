@@ -12,12 +12,16 @@ interface ILists {
 	createTime: string;
 	updateTime: string;
 }
+type file = {
+	id: string;
+	url: string;
+};
 interface IListsDTO {
 	name: string;
 	description: string;
 	userId: string;
 	attr: number;
-	cover: string;
-	avatar: string;
+	cover: file;
+	avatar: file;
 }
 export type { ILists, IListsDTO };
