@@ -17,15 +17,16 @@ public class ListsController {
   ListsService listsService;
 
   @LoginAuth
-  @PostMapping("/")
-  public R<String> createLists(@RequestBody ListsDTO lists){
+  @PostMapping("/create")
+  public R<String> createLists(@RequestBody ListsDTO lists ,@RequestAttribute("userId") String userId){
     String id = new Date().getTime()+"";
     lists.setId(id);
+    lists.setUserId(userId);
     listsService.createLists(lists);
     return R.ok("");
   }
   @GetMapping("/all")
-  public PageResult<Lists> getAllLists(@RequestParam("page") Integer page,
+  public PageResult<ListsDTO> getAllLists(@RequestParam("page") Integer page,
                                        @RequestParam("limit") Integer limit){
     return PageResult.success(listsService.getAllLists(page, limit));
   }

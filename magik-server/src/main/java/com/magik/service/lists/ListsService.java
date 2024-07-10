@@ -17,9 +17,9 @@ public class ListsService {
   public int createLists(ListsDTO listsDTO){
     return listsMapper.createLists(listsDTO);
   }
-  public Page<Lists> getAllLists(Integer page,Integer limit){
-    Page<Lists> p = PageHelper.startPage(page,limit);
-    List<Lists> listsList = listsMapper.getAllLists(page, limit);
+  public Page<ListsDTO> getAllLists(Integer page,Integer limit){
+    Page<ListsDTO> p = PageHelper.startPage(page,limit);
+    List<ListsDTO> listsList = listsMapper.getAllLists(page, limit);
     return p;
   }
   public int deleteLists(String id){

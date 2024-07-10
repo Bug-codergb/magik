@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
 			return NextResponse.next();
 		}
 	}
-	if (nextUrl.startsWith('/api')) {
+	if (nextUrl.startsWith('/api') || nextUrl.startsWith('/server')) {
 		const response = NextResponse.next();
 		response.headers.append('Authorization', auth ? auth.value : '');
 		return response;
@@ -35,5 +35,5 @@ export function middleware(request: NextRequest) {
 }
 let a = 12;
 export const config = {
-	matcher: ['/home/:path*', '/api/:path*', '/login', '/logout'],
+	matcher: ['/home/:path*', '/api/:path*', '/login', '/logout', '/server/:path*'],
 };

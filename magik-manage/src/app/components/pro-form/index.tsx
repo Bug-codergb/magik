@@ -18,14 +18,19 @@ interface IProps<T extends AnyObject> {
 	formData: T;
 	aspectRatio?: number;
 	realWidth?: number;
+	getFormData: (arg: T) => void;
 }
 const { TextArea } = Input;
 const ProForm = forwardRef(function Fn<T extends AnyObject>(
 	props: IProps<T>,
 	propsRef
 ): ReactElement {
+	const { getFormData } = props;
 	const [config, setConfig] = useState(cloneDeep(props.config));
 	const [formData, setFormData] = useState(cloneDeep(props.formData));
+	useEffect(() => {
+		setFormData(cloneDeep(props.formData));
+	}, [props.formData]);
 	useEffect(() => {
 		for (const item of config) {
 			for (let it of item) {
@@ -37,15 +42,32 @@ const ProForm = forwardRef(function Fn<T extends AnyObject>(
 	}, [props.config]);
 
 	const [formRef] = Form.useForm();
-	const handleFormFinish = (val: any) => {
-		console.log(val);
+	const handleFormFinish = (val: T) => {
+		getFormData(val);
 	};
 	const validateForm = () => {
 		formRef.submit();
 	};
+	const resetFields = (val: T) => {
+		formRef.resetFields();
+	};
+	const setFieldsValue = (val: T) => {
+		formRef.setFieldsValue({ ...val });
+		for (let item of config) {
+			for (let it of item) {
+				if (it.tag === 'Cover' && val[it.name]) {
+					it.isShowFile = true;
+				}
+			}
+		}
+		setFormData(val);
+		setConfig(config);
+	};
 	useImperativeHandle(propsRef, () => {
 		return {
 			validateForm,
+			resetFields,
+			setFieldsValue,
 		};
 	});
 
@@ -85,7 +107,8 @@ const ProForm = forwardRef(function Fn<T extends AnyObject>(
 
 			let raw = { ...formData };
 			setFormData(raw);
-			currentFile && formRef.setFieldValue(currentFile.name, res.data[0].id);
+			currentFile &&
+				formRef.setFieldValue(currentFile.name, { id: res.data[0].id, url: res.data[0].url });
 		}
 	};
 	const handleDeleteFile = (it: IProForm) => {

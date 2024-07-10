@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ListsMapper {
   public int createLists(ListsDTO lists);
-  public List<Lists> getAllLists(@Param("page") Integer page,@Param("limit") Integer limit);
+  public List<ListsDTO> getAllLists(@Param("page") Integer page,@Param("limit") Integer limit);
   public int deleteLists(@Param("id") String id);
   public int updateLists(ListsDTO listsDTO);
 }

@@ -11,13 +11,15 @@
                                                                            #{avatar},#{cover})
   </insert>
 
-  <resultMap id="listsResultMap" type="Lists">
+  <resultMap id="listsResultMap" type="ListsDTO">
     <id property="id" column="id"></id>
     <result property="name" column="name"></result>
     <result property="description" column="description"></result>
     <result property="attr" column="attr"></result>
     <result property="createTime" column="createTime"></result>
     <result property="updateTime" column="updateTime"></result>
+    <result property="cover" column="cover"></result>
+    <result property="avatar" column="avatar"></result>
     <association property="user" column="userId"  javaType="User" select="com.magik.mapper.user.UserMapper.getUserById"></association>
     <association property="avatarUrl" column="avatar" javaType="java.lang.String" select="com.magik.mapper.upload.UploadMapper.getFileUrl"></association>
     <association property="coverUrl" column="cover" javaType="java.lang.String" select="com.magik.mapper.upload.UploadMapper.getFileUrl"></association>

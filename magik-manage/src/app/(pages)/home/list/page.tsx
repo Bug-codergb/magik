@@ -1,9 +1,10 @@
 'use client';
 import ProTable from '@/app/components/pro-table';
 import { ILists } from '@/app/interface/ILists';
+import { request } from '@/app/utils/request';
 import { UserOutlined } from '@ant-design/icons';
 import type { TableColumnsType } from 'antd';
-import { Avatar, Button, Image, Space, Tag } from 'antd';
+import { Avatar, Button, Image, message, Space, Tag } from 'antd';
 import { useRef } from 'react';
 import CreateList from './components/create-list';
 const List = () => {
@@ -85,8 +86,10 @@ const List = () => {
 				return (
 					<Space size={'small'}>
 						<Button type={'link'}>查看</Button>
-						<Button type={'link'}>编辑</Button>
-						<Button type={'link'} danger>
+						<Button type={'link'} onClick={() => handleEditLists(row)}>
+							编辑
+						</Button>
+						<Button type={'link'} danger onClick={() => handleDeleteLists(row)}>
 							删除
 						</Button>
 					</Space>
@@ -99,9 +102,27 @@ const List = () => {
 	const handleCreateListRef = () => {
 		createListRef.current.showDrawer();
 	};
+
+	const handleDeleteLists = async (row: ILists) => {
+		const res = await request({
+			url: '/server/lists/delete/' + row.id,
+		});
+		if (res.code === 200) {
+			message.success('列表删除成功');
+			success();
+		}
+	};
+	const handleEditLists = (row: ILists) => {
+		createListRef.current.showDrawer(row);
+	};
+	const tableRef = useRef();
+	const success = () => {
+		tableRef.current?.search();
+	};
 	return (
 		<div className={'card table-box'}>
 			<ProTable<ILists>
+				ref={tableRef}
 				columns={columns}
 				url={'/api/lists'}
 				pagination={true}
@@ -111,7 +132,7 @@ const List = () => {
 					</Button>
 				}
 			/>
-			<CreateList ref={createListRef} />
+			<CreateList ref={createListRef} success={success} />
 		</div>
 	);
 };

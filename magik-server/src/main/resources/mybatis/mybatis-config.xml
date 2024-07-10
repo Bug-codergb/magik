@@ -5,6 +5,7 @@
 <configuration>
   <typeAliases>
     <package name="com.magik.bean"/>
+    <package name="com.magik.dto"/>
   </typeAliases>
   <plugins>
     <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>

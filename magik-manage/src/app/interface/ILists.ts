@@ -11,12 +11,15 @@ interface ILists {
 	coverUrl: string;
 	createTime: string;
 	updateTime: string;
+	cover: string;
+	avatar: string;
 }
 type file = {
 	id: string;
 	url: string;
 };
 interface IListsDTO {
+	id: string;
 	name: string;
 	description: string;
 	userId: string;
