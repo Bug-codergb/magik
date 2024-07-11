@@ -38,11 +38,14 @@ const UploadFile: FC<IProps> = forwardRef((props, propsRef): ReactNode => {
 	const imgRef = useRef();
 	const [cropper, setCropper] = useState<Cropper>();
 	useEffect(() => {
-		if (imgRef.current) {
+		if (isModalOpen && imgRef.current) {
 			initCropper();
 		}
 	}, [isModalOpen, imgRef.current]);
 	const initCropper = () => {
+		if (cropper) {
+			cropper.destroy();
+		}
 		const url = file && URL.createObjectURL(file);
 		const cropperContainer =
 			imgRef.current &&
