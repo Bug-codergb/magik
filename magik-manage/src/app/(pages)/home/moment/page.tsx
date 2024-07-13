@@ -1,8 +1,10 @@
 'use client';
+import { useRef } from "react";
 import ProTable from '@/app/components/pro-table/index';
 import { IMenu } from '@/app/interface/IMenu';
 import { IMoment } from '@/app/interface/IMoment';
-import { Button, Space, TableColumnsType } from 'antd';
+import { Button, message, Space, TableColumnsType } from "antd";
+import { request } from "@/app/utils/request";
 const Moment = () => {
 	const columns: TableColumnsType<IMoment> = [
 		{
@@ -59,7 +61,7 @@ const Moment = () => {
 					<Space>
 						<Button type={'link'}>查看</Button>
 						<Button type={'link'}>编辑</Button>
-						<Button danger type={'link'}>
+						<Button danger type={'link'} onClick={()=>handleDeleteMoment(row)}>
 							删除
 						</Button>
 					</Space>
@@ -67,9 +69,21 @@ const Moment = () => {
 			},
 		},
 	];
+	const tableRef = useRef();
+	const handleDeleteMoment = async (row:IMoment)=>{
+		const res = await request({
+			url:"/server/moment/delete/"+row.id,
+			method:"post",
+		})
+		if(res.code === 200){
+			message.success("删除成功");
+			tableRef.current?.search();
+		}
+	}
 	return (
 		<div className={'table-box card'}>
 			<ProTable<IMenu>
+				ref={tableRef}
 				columns={columns}
 				url={'/server/moment/list'}
 				pagination={true}

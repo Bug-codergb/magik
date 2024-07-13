@@ -26,4 +26,7 @@ public class MomentService {
     List<Moment> moments = momentMapper.getAllMoment(page,limit);
     return p;
   }
+  public int deleteMoment(String id ){
+    return momentMapper.deleteMoment(id);
+  }
 }

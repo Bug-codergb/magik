@@ -48,4 +48,10 @@ public class MomentController {
     Page<Moment> moments = momentService.getAllMoment(page, limit);
     return PageResult.success(moments);
   }
+  @LoginAuth
+  @PostMapping("/delete/{id}")
+  public R<String> deleteMoment(@PathVariable("id") String id){
+    momentService.deleteMoment(id);
+    return R.ok("");
+  }
 }

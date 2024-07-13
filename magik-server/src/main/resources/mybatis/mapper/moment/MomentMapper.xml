@@ -38,4 +38,7 @@
     left join file as f on f.id =mf.fId
     where mf.mId=#{id}
   </select>
+  <delete id="deleteMoment">
+    delete from moment where id = #{id}
+  </delete>
 </mapper>

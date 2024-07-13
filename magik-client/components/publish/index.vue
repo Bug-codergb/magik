@@ -32,10 +32,11 @@
     <MediaCrop ref="mediaCropRef" @success="handleFinishMedia" />
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="tsx">
 import { Close } from "@element-plus/icons-vue";
 import Media from "~/assets/svg/media.vue";
 import type { IMedia } from "~/interface/media";
+import message from "../message";
 
 const user = useUserMsg();
 const formData = reactive({
@@ -66,19 +67,23 @@ const handleFinishMedia = async (mediaList: IMedia[]): Promise<void> => {
   fileList.value = mediaList;
 };
 const handlePublish = async (): Promise<void> => {
+  if (!formData.content || formData.content.trim().length === 0) {
+    message("为你的动态添加一条内容吧");
+    return;
+  }
   const rawFormData = new FormData();
   for (const item of fileList.value) {
     rawFormData.append("file", item.file);
     rawFormData.append("warn", JSON.stringify(item.warn));
     rawFormData.append("desc", item.description);
   }
-  const res = await $fetch("/api/file/upload", {
+  const res = await $fetch("/server/file/upload", {
     method: "post",
     body: rawFormData
   });
   if (res.code === 200) {
     const filelist = res.data.map(item => item.id);
-    const ret = await $fetch("/api/moment/create", {
+    const ret = await $fetch("/server/moment/create", {
       method: "post",
       body: {
         content: formData.content,
