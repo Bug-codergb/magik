@@ -36,8 +36,7 @@
 import { Close } from "@element-plus/icons-vue";
 import Media from "~/assets/svg/media.vue";
 import type { IMedia } from "~/interface/media";
-import message from "../message";
-
+import message from "../../element/message";
 const user = useUserMsg();
 const formData = reactive({
   content: ""

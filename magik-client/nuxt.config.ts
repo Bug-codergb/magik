@@ -11,5 +11,15 @@ export default defineNuxtConfig({
       }
     }
   },
-  modules: ["@element-plus/nuxt", "@pinia/nuxt", "@vueuse/nuxt"]
+  modules: ["@element-plus/nuxt", "@pinia/nuxt", "@vueuse/nuxt"],
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false
+    },
+    {
+      path: "~/element",
+      pathPrefix: false
+    }
+  ]
 });
